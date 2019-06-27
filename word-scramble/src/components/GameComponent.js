@@ -1,6 +1,5 @@
 import React from "react";
 import Game from "../game-logic/Game.js";
-import Word from "../game-logic/Word.js";
 import { wordList, anagramList } from "../lib/wordbank.js";
 
 class GameComponent extends React.Component {
@@ -23,18 +22,11 @@ class GameComponent extends React.Component {
     this.setState({game});
   }
 
-  focus() {
-    this.textInput.current.focus();
-  }
-
-  // timer bar
   handleClick = e => {
-    // console.log(`a: `, e.target.name);
     this[e.target.name]();
   };
 
   startGame = () => {
-    // if started, reset, else start
     if (this.state.game.started) {
       this.initGame();
     } else {
@@ -50,30 +42,25 @@ class GameComponent extends React.Component {
   };
 
   submitGuess = () => {
-    console.log(`⚓️⚓️⚓️ submit button`);
     if (this.state.game.started) {
-      console.log(`🍎 submitting guess: `, this.state.userGuess);
       this.state.game.handleSubmit(this.state.userGuess);
       this.setState({userGuess: ""});
-    } else {
-      console.log(`submit game not started`);
     }
     this.refs.textInput.focus();
   };
+
   shuffleLetters = () => {
-    console.log(`🍏 shuffle button`);
     this.state.game.wordObj.shuffle();
     this.refs.textInput.focus();
-
   };
+
   skipWord = () => {
-    console.log(`🍒 skip button`);
     this.state.game.skipWord();
     this.setState({userGuess: ""});
     this.refs.textInput.focus();
   };
+
   handleInput = e => {
-    // console.log(`🐤: `, e.target.value);
     this.setState({ userGuess: e.target.value });
   };
 
@@ -92,14 +79,12 @@ class GameComponent extends React.Component {
         <div className="timerBarContainer">
           <div className="timerBar" style={{width: timerBarWidth}}></div>
         </div>
-        {/* <div>Score: {game? game.score : 0}</div> */}
-        {/* <div>Time left: {timeLeft}</div> */}
-
         <div className="canvas-container">
+          <h2 className="score">{game && game.started ? game.score : ""}</h2>
           <canvas className="game-canvas" ref="gameCanvas" width="705" height="190" />
         </div>
 
-        <div style={{height: 25}}>{game? game.gameMessage : ""}</div>
+        <div className="game-message" style={{height: 25}}>{game? game.gameMessage : ""}</div>
 
         <div className="input-and-buttons-row">
           <div className="row1">
@@ -125,7 +110,7 @@ class GameComponent extends React.Component {
           </div>
           <div className="row2">
             <button className="startButton" name="startGame" onClick={this.handleClick}>
-              {game && game.started ? "restart" : "start"}
+              {game && game.started ? "Restart Game" : "Start Game!"}
             </button>
           </div>
         </div>

@@ -143,6 +143,7 @@ class Game {
 
   addTime = () => {
     this.bonusTime = this.bonusTime + 15000;
+    
     // cap bonus time
     var maxBonusTime = this.maxTimeAllowed - this.initialTimeAllowed;
     if (this.bonusTime > maxBonusTime) {
@@ -186,6 +187,9 @@ class Game {
   // for advancing the round and setting the next word
   setNextWord = () => {
     this.roundCount++;
+    if (this.roundCount === this.wordList.length - 1) {
+      this.roundCount = 0;
+    }
     this.currentWord = this.wordList[this.roundCount].toUpperCase();
     this.setWord(this.currentWord);
   }
@@ -193,7 +197,7 @@ class Game {
   // set a specific word
   setWord = (wordStr) => {
     this.currentWord = wordStr;
-    console.log(`setting new word: ${wordStr}`);
+
     // generate scramble:
     if (wordStr === "Ocean Commotion") {
       this.currentWordScramble = wordStr;
@@ -204,46 +208,25 @@ class Game {
     // create word object
     let canvas = this.canvas;
     this.wordObj = new Word(wordStr, this.currentWordScramble, canvas.height, canvas.width);
-
-    console.log(`this.wordObj.idealWord: `, this.wordObj.idealWord);
   }
 
   //Button & Input Functionality
   handleSubmit = (input) => {
     input = input.toUpperCase();
     this.currentWord = this.currentWord.toUpperCase();
-    console.log(`in game: input: ${input}, this.word: ${this.currentWord}`);
 
-    if (input === '') {
-      // handleWiggleButton(); // add wiggle
-      this.gameMessage = 'Field cannot be empty';
-      return;
-    }
-    if (input === this.currentWord) {
-      console.log(`correct guess`);
-      // document.getElementById('alerts').innerHTML = `We're happy as a clam that you guessed ${input.value} correctly!`;
-      // clearInput();
+    if (input === this.currentWord || this.checkAnagram(input)) {
       this.addTime();
       this.addPoints();
       this.setNextWord();
-      // this.currentWordScramble = scrambleWord(this.roundCount).toUpperCase();
-      // this.initializeCanvasWithANewWord(this.currentWordScramble);
-      // resetFocus();
-      return;
+      this.gameMessage = ``;
+    } else if (input === ``) {
+      this.gameMessage = 'Field cannot be empty';
+    } else {
+      this.gameMessage = `Nice try, but ${input} didn't seal the deal.`;
     }
-    // if (this.checkAnagram(input.value)) {
-    //   // handleWiggleButton(); // add wiggle
-    //   // document.getElementById('alerts').innerHTML = `We know you're feeling salty that we didn't accept ${input.value}. Try something with an Oceanic theme.`;
-    //   // clearInput();
-    //   // resetFocus();
-    //   return;
-    // } 
-    // if (input !== this.word) {
-    //   // handleWiggleButton(); // add wiggle
-    //   // document.getElementById('alerts').innerHTML = `Nice try, but ${input.value} didn't seal the deal.`;
-    //   // clearInput();
-    //   // resetFocus();
-    // }
+
+    // handleWiggleButton(); // add wiggle
   };
 
   // score is the number of letters in the word
@@ -265,6 +248,7 @@ class Game {
       // clearInput();
       this.subTime();
       this.setNextWord();
+      this.gameMessage = ``;
       // document.getElementById('alerts').innerHTML = `Looks like you had a whale of a time with that one. The correct answer was ${shuffledList[roundCount - 1].toUpperCase()}.`;
       // resetFocus();
     }

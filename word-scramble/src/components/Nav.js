@@ -4,10 +4,10 @@ const Nav = props => {
   return (
     <nav>
       <ul>
-        <a href="#"><li>How To Play</li></a>
-        <a href="#"><li>Play game</li></a>
-        <a href="#"><li>High scores</li></a>
-        <a href="#"><li>About</li></a>
+        <a href="#"><li>How to Play</li></a>
+        <a href="#"><li>Play Game</li></a>
+        <a href="#"><li>High Scores</li></a>
+        <a href="#"><li>About Us</li></a>
       </ul>
     </nav>
   );
