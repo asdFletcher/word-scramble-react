@@ -10,16 +10,37 @@ class GameComponent extends React.Component {
 
   componentDidMount() {
     this.initGame();
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = (e) => {
+    // enter key
+    if (e.keyCode === 13) { this.submitGuess(); }
+
+    // right arrow key
+    if (e.keyCode === 39) { this.skipWord(); }
+
+    // left arrow key
+    if (e.keyCode === 37) { this.shuffleLetters(); }
   }
 
   initGame = () => {
     let newState = {};
     this.setState(newState);
     const gameCanvas = this.refs.gameCanvas;
-    const ctx = gameCanvas.getContext("2d");
-    ctx.font = "75px 'Overpass Mono'";
-    let game = new Game(wordList, anagramList, gameCanvas, this.updateCallback);
+    let options = {
+      wordList: wordList,
+      anagramList: anagramList,
+      gameCanvas: gameCanvas,
+      updateCallback: this.updateCallback,
+    }
+    let game = new Game(options);
     this.setState({game});
+  }
+
+  updateCallback = () => {
+    this.setState({game: this.state.game});
+
   }
 
   handleClick = e => {
@@ -28,45 +49,41 @@ class GameComponent extends React.Component {
 
   startGame = () => {
     if (this.state.game.started) {
-      this.initGame();
+      this.setState({userGuess: ""});
+      this.state.game.setGameToStartingState();
     } else {
       this.state.game.start();
       this.setState({started: true});
       this.setState({userGuess: ""});
-      this.refs.textInput.focus();
     }
+    setTimeout(() => {this.setFocusToInput();}, 1);
   };
 
-  resetGame = () => {
-    this.state.game.resetTimer();
-  };
-
+  setFocusToInput = () => {
+    this.refs.textInput.focus();
+  }
   submitGuess = () => {
     if (this.state.game.started) {
       this.state.game.handleSubmit(this.state.userGuess);
       this.setState({userGuess: ""});
     }
-    this.refs.textInput.focus();
+    this.setFocusToInput()
   };
 
   shuffleLetters = () => {
-    this.state.game.wordObj.shuffle();
-    this.refs.textInput.focus();
+    this.state.game.shuffleLetters()
+    this.setFocusToInput()
   };
 
   skipWord = () => {
     this.state.game.skipWord();
     this.setState({userGuess: ""});
-    this.refs.textInput.focus();
+    this.setFocusToInput()
   };
 
   handleInput = e => {
-    this.setState({ userGuess: e.target.value });
+    this.setState({ userGuess: e.target.value.toUpperCase() });
   };
-
-  updateCallback = () => {
-    this.setState({game: this.state.game});
-  }
 
   render() {
     let game = this.state.game;
@@ -92,11 +109,10 @@ class GameComponent extends React.Component {
               className="userGuess"
               ref="textInput"
               name="userGuess"
-              placeholder="enter solution here"
-              value = {this.state.started ? this.state.userGuess : ""}
+              placeholder={game && game.started? "" : "enter solution here"}
+              value = {game && game.started ? this.state.userGuess : ""}
               onChange = {this.handleInput}
-              disabled = {this.state.started ? "" : "disabled"}
-              // maxlength = "10"
+              disabled = {game && game.started ? "" : "disabled"}
             />
             <button className="gameButton" name="submitGuess" onClick={this.handleClick}>
               submit
@@ -113,9 +129,11 @@ class GameComponent extends React.Component {
               {game && game.started ? "Restart Game" : "Start Game!"}
             </button>
           </div>
+
         </div>
       </div>
     );
   }
 }
+
 export default GameComponent;

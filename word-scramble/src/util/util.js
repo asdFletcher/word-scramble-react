@@ -14,8 +14,6 @@ export const shuffle = (arr) => {
 }
 
 export const scrambleWord = (currentWord, idealWord) => {
-  console.log(`in scramble: currentWord: `, currentWord);
-  console.log(`in scramble: idealWord: `, idealWord);
   let letterArray = Array.from(currentWord);
   shuffle(letterArray);
   let scrambledWord = letterArray.join(''); //turn into string for comparison

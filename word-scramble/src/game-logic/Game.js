@@ -2,22 +2,27 @@ import { shuffle, scrambleWord } from "../util/util.js";
 import Word from "./Word.js";
 
 class Game {
-  constructor(wordList, anagramList, canvas, updateCallback) {
-    this.wordList = wordList;
-    this.anagramList = anagramList;
-    this.canvas = canvas;
-    this.updateCallback = updateCallback;
+  constructor(options) {
+    this.wordList = options.wordList;
+    this.anagramList = options.anagramList;
+    this.canvas = options.gameCanvas;
+    this.updateCallback = options.updateCallback;
+
+    // game constants
+    this.updateInterval = 10; // time in ms between renders
+    this.initialTimeAllowed = 60 * 2 * 1000; // start time at beginning in ms
+    this.maxTimeAllowed = 60 * 5 * 1000; // max allowed time in ms
     this.ctx = this.canvas.getContext("2d");
+    this.ctx.font = "75px 'Overpass Mono'";
 
-    this.roundCount = 0;
-    this.score = 0;
-    this.currentWordScramble = "";
-    this.shuffledList = [];
+    // instance constants
+    this.setGameStartSetings();
 
-    let initialWord = "Ocean Commotion";
-    this.setWord(initialWord);
-    
-    this.gameMessage = "";
+    // intervals
+    var animate;
+    var timer; // pointer to setInterval for stopping and starting timer
+
+    this.startAnimatingCanvas();
 
     // Variables for swap animations
     let oldWordScramble = 0;
@@ -25,55 +30,42 @@ class Game {
     // let SWAPSPEED = 3.5;
     // let SWAPYAMPLITUDE = 2;
 
-    // Global Variables for Timer
-    var timer; // pointer to setInterval for stopping and starting timer
+  }
 
-    this.updateInterval = 10; // time in ms between renders
-    this.startTime = 0; // time user begins playing
-    this.initialTimeAllowed = 60 * 2 * 1000; // start time at beginning in ms
-    this.maxTimeAllowed = 60 * 5 * 1000; // max allowed time in ms
-    this.timeLeft = this.initialTimeAllowed; // remaining time
-    this.bonusTime = 0; // accumulated bonus time in ms
-    this.penaltyTime = 0; // accumulated time penalty
-    this.started = false; // tracks whether the game is started for initial render
+  setGameToStartingState = () => {
+    this.stopAllIntervals();
+    this.clearCanvas();
 
-    // Global Variables for Canvas & Canvas Creation
-    // var canvasEl = document.getElementById('canvas');
-    // var ctx = canvasEl.getContext("2d");
-    // ctx.font = "75px 'Overpass Mono'";
-
-    var animate;
-    var allLetters = [];
-    var wordArray = [];
+    this.setGameStartSetings();
 
     this.startAnimatingCanvas();
   }
 
+  setGameStartSetings = () => {
+    this.roundCount = 0;
+    this.score = 0;
+    this.currentWordScramble = "";
+    this.shuffledList = [];
+    let initialWord = "Ocean Commotion";
+    this.setWord(initialWord);
+    this.gameMessage = "";
+    this.startTime = 0; // time user begins playing
+    this.timeLeft = this.initialTimeAllowed; // remaining time
+    this.bonusTime = 0; // accumulated bonus time in ms
+    this.penaltyTime = 0; // accumulated time penalty
+    this.started = false; // tracks whether the game is started for initial render
+  }
+
   startAnimatingCanvas(){
-    console.log(`🐤`);
-    // one time function calls
-    // call update every __ms
     this.animate = setInterval(this.drawCanvas, this.updateInterval);
+    this.updater = setInterval(this.updateCallback, this.updateInterval);
   }
 
   start() {
-    // this.clearCanvas();
     this.shuffledWordList = shuffle(this.wordList);
-    
     this.startTimer();
-
     this.roundCount = 0;
     this.setWord(this.shuffledWordList[this.roundCount]);
-
-    // this.setNextWord();
-    // this.initializeCanvasWithANewWord(this.currentWordScramble);
-    // activateSubmission();
-    // createScoreCounter();
-    // input.removeAttribute('disabled');
-    // resetFocus();
-    // activateSkip();
-    // hide(startGameButton, 'none');
-    // activateRestart();
   }
 
   startTimer = () => {
@@ -81,12 +73,7 @@ class Game {
       this.startTime = Date.now();
     }
     this.started = true;
-    this.timer = setInterval(this.callAllIntervals, this.updateInterval);
-  }
-
-  callAllIntervals = () => {
-    this.updateCallback();
-    this.incrementTime();
+    this.timer = setInterval(this.incrementTime, this.updateInterval);
   }
 
   stopAllIntervals = () => {
@@ -105,7 +92,6 @@ class Game {
   
     // ~~~~~~ main decrement time ~~~~~~~~~
     this.timeLeft = this.initialTimeAllowed - timeElapsed + this.bonusTime - this.penaltyTime;
-    console.log(`🚀🚀🚀bonusTime: `, this.bonusTime);
     // game over
     if (this.timeLeft < 0) {
       this.timeLeft = 0;
@@ -165,23 +151,12 @@ class Game {
   drawCanvas = () => {
     this.clearCanvas();
     if (!this.started) {
-      // console.log(`this.word: `, this.wordObj.scramble);
       this.ctx.fillStyle = "navy";
-      this.ctx.fillText(this.wordObj.scramble, 50, 50);
+      this.ctx.fillText(this.wordObj.scramble.toUpperCase(), 75, 75);
     } else {
-      // console.log(`this.word: `, this.wordObj.scramble);
       this.ctx.fillStyle = "navy";
-      this.ctx.fillText(this.wordObj.scramble, 50, 50);
+      this.ctx.fillText(this.wordObj.scramble.toUpperCase(), 75, 75);
     }
-    // for each letter
-    // for (var i = 0; i < allLetters.length; i++){
-
-    //     // draw the letter
-    //     allLetters[i].draw();
-
-    //     //update the letter position
-    //     allLetters[i].update();
-    // }
   }
 
   // for advancing the round and setting the next word
@@ -222,16 +197,15 @@ class Game {
       this.gameMessage = ``;
     } else if (input === ``) {
       this.gameMessage = 'Field cannot be empty';
+      // handleWiggleButton(); // add wiggle
     } else {
       this.gameMessage = `Nice try, but ${input} didn't seal the deal.`;
+      // handleWiggleButton(); // add wiggle
     }
 
-    // handleWiggleButton(); // add wiggle
   };
 
-  // score is the number of letters in the word
   addPoints = () => {
-    console.log(`adding: ${this.currentWord.length} points for this currentWord: ${this.currentWord}`);
     this.score += this.currentWord.length;
   }
 
@@ -258,7 +232,9 @@ class Game {
     this.stopAllIntervals();
   }
 
-
+  shuffleLetters = () => {
+    this.wordObj.shuffle();
+  }
 
 }
 

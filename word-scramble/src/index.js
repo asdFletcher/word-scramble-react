@@ -8,17 +8,21 @@ import "./styles/reset.css";
 import "./styles/base.scss";
 import "./styles/game.scss";
 
-function App() {
-  return (
-    <div className="App">
-      <Title />
-      <div className="nav-and-game-container">
-        <Nav />
-        <GameComponent />
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <Title />
+        <div className="nav-and-game-container">
+          <Nav />
+          <GameComponent />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
+
+

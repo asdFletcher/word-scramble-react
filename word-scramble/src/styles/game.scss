@@ -37,11 +37,12 @@
 }
 
 .score {
+  position: relative;
+  z-index: 2;
+
   font-family: 'Slackey', cursive;
   font-size: 20px;
   text-align: right;
-  position: relative;
-  z-index: 2;
   color: navy;
   margin: 10 15 0 0;
 }
@@ -127,6 +128,10 @@
     color: navy;
     border-radius: 5px;
     margin-right: 2px;
+  }
+
+  .userGuess::placeholder {
+    font-size: 30px;
   }
 }
 
