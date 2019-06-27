@@ -1,0 +1,81 @@
+/* ~~~~~~~~~~~~~~~~ */
+/* headers */
+/* ~~~~~~~~~~~~~~~~ */
+
+header {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-family: 'Slackey', cursive;
+  font-size: 60px;
+  text-align: center;
+  text-shadow: 4px 4px rgb(21, 218, 208);
+  margin-bottom: 0px;
+ 
+}
+
+h2 {
+  font-size: 20px;
+}
+
+/* ~~~~~~~~~~~~~~~~ */
+/* body */
+/* ~~~~~~~~~~~~~~~~ */
+
+body {
+  background-color: rgb(51, 134, 167);
+  color: rgb(225, 246, 255);
+  font-family: 'Hind Siliguri', sans-serif;
+  margin: 0 auto;
+}
+
+section {
+  margin: 0 auto;
+}
+
+nav {
+  float: left;
+  text-align: center;
+  background-color: rgb(52, 136, 136); 
+  width: 125px;
+  border: 3px solid rgb(255, 246, 255);
+  border-radius: 10px;
+}
+
+main {
+  margin-left: 165px;
+}
+
+body {
+  width: 80%;
+  min-width: 500px;
+  max-width: 960px;
+}
+
+nav li {
+  font-family: 'Slackey', cursive;
+  font-size: 20px;
+  background-color: rgb(21, 218, 208);
+  color: rgb(225, 246, 255);
+  border: 3px solid rgb(255, 246, 255);
+  border-radius: 5px;
+
+  width: 100px;
+  height: 40px;
+  margin: 10px auto;
+  text-align: center;
+  padding: 20px 0px;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+.selectedPage {
+  border-color: navy;
+  color: navy;
+  background-color: lightblue;
+}

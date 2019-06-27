@@ -2,28 +2,7 @@
 // ~~~~~~~~~   functions     ~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function initializeCanvasWithANewWord(word) {
-  // first, remove old letters
-  if (allLetters.length > 0) {
-    allLetters = [];
-  }
 
-  // convert word into an array of letters for easier handling
-  wordArray = [];
-  for (var i = 0; i < word.length; i++) {
-    wordArray[i] = word[i];
-  }
-
-  // instantiate letter objects
-  for (var i = 0; i < wordArray.length; i++) {
-    new Letter(wordArray[i]);
-  }
-
-  // single call to display the letters in their initial position
-  renderInitial();
-
-  // wait
-}
 
 // call update
 function startAnimatingCanvas() {
@@ -173,27 +152,7 @@ function initiateSwap() {
   }
 }
 
-// given a word length, returns an array of canvas-centered,
-// evenly spaced X coordinates
-function generateXCoordinates(numLetters) {
-  // Global variables: letterSpacing, letterWidth
 
-  var coordArray = [];
-  // TODO: is this the best way to retrieve the canvas element?
-  var canvasWidth = document.getElementsByTagName("canvas")[0].width;
-  var spacing = letterSpacing + letterWidth;
-  var wordLength = spacing * numLetters - letterSpacing;
-
-  // word start X
-  var wordStartX = canvasWidth / 2 - wordLength / 2 - letterWidth / 2 + 10;
-
-  // calculate word positions and fill array
-  for (var i = 0; i < numLetters; i++) {
-    coordArray[i] = wordStartX + spacing * i;
-  }
-
-  return coordArray;
-}
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~ scramble word ~~~~~~~~~~~~~ // TODO: replace with calls to existing scramble functions ~~~~~~~~~

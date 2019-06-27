@@ -4,7 +4,9 @@ import Nav from "./components/Nav.js";
 import Title from "./components/Title.js";
 import GameComponent from "./components/GameComponent.js";
 
-import "./base.css";
+import "./styles/reset.css";
+import "./styles/base.css";
+import "./styles/game.scss";
 
 function App() {
   return (

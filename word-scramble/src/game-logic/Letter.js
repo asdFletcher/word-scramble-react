@@ -4,27 +4,30 @@
 class Letter {
   constructor(letter) {
     this.letter = letter;
-    this.xPosition;
-    this.yPosition;
-    this.xSpeed;
-    this.ySpeed;
+    this.xPosition = 0;
+    this.yPosition = 0;
+    this.xSpeed = 0;
+    this.ySpeed = 0;
 
     this.xInitial = 0;
     this.yInitial = 0;
 
     this.xMoving = false;
     this.yMoving = false;
-    this.xDestination;
-    this.yDestination;
+    this.xDestination = 0;
+    this.yDestination = 0;
 
     this.wiggling = false;
-    this.wiggleCount;
+    this.wiggleCount = 0;
 
     this.ySwapping = false;
     this.xSwapping = false;
+
+    this.SWAPYAMPLITUDE = 2;
+    this.SWAPSPEED = 3.5;
   }
 
-  allLetters.push(this);
+  // allLetters.push(this);
   // TODO: implement wave functionality 
   //this.age
 
@@ -83,11 +86,11 @@ class Letter {
     this.yDestination = endY;
   }
 
-  draw() {
-    ctx.fillStyle = "navy"; // set the letter color
-    // draw the letter at current position
-    ctx.fillText(`${this.letter}`, this.xPosition, this.yPosition);
-  }
+  // draw() {
+  //   ctx.fillStyle = "navy"; // set the letter color
+  //   // draw the letter at current position
+  //   ctx.fillText(`${this.letter}`, this.xPosition, this.yPosition);
+  // }
 
   incrementPosition() {
     var xDistance = this.xDestination - this.xPosition;
@@ -186,7 +189,7 @@ class Letter {
     if (Math.abs(totalXTravel) > 0) {
         var pctComplete = (this.xPosition - this.xInitial) / totalXTravel;
         var angle = pctComplete * Math.PI; // in radians
-        var yVelocity = Math.cos(angle) * SWAPYAMPLITUDE;
+        var yVelocity = Math.cos(angle) * this.SWAPYAMPLITUDE;
     } else {
         var yVelocity = 0;
     }
@@ -202,7 +205,7 @@ class Letter {
     // if swapping
     // disable wiggling, and set speed higher
     if (this.xSwapping || this.ySwapping) {
-        this.xSpeed = SWAPSPEED;
+        this.xSpeed = this.SWAPSPEED;
         this.calcSwapYVelocity();
         this.wiggling = false;
     }
