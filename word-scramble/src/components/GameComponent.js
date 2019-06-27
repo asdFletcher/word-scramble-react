@@ -88,12 +88,12 @@ class GameComponent extends React.Component {
     let timerBarWidth = (timeLeft/maxTimeAllowed) * 600;
 
     return (
-      <>
+      <div className="gameContainer">
         <div className="timerBarContainer">
           <div className="timerBar" style={{width: timerBarWidth}}></div>
         </div>
-        <div>Score: {game? game.score : 0}</div>
-        <div>Time left: {timeLeft}</div>
+        {/* <div>Score: {game? game.score : 0}</div> */}
+        {/* <div>Time left: {timeLeft}</div> */}
 
         <div className="canvas-container">
           <canvas className="game-canvas" ref="gameCanvas" width="705" height="190" />
@@ -102,31 +102,34 @@ class GameComponent extends React.Component {
         <div style={{height: 25}}>{game? game.gameMessage : ""}</div>
 
         <div className="input-and-buttons-row">
-          <input
-            className="userGuess"
-            ref="textInput"
-            name="userGuess"
-            placeholder="enter solution here"
-            value = {this.state.started ? this.state.userGuess : ""}
-            onChange = {this.handleInput}
-            disabled = {this.state.started ? "" : "disabled"}
-            // maxlength = "10"
-          />
-          <button className="gameButton" name="submitGuess" onClick={this.handleClick}>
-            submit
-          </button>
-          <button className="gameButton" name="shuffleLetters" onClick={this.handleClick}>
-            shuffle
-          </button>
-          <button className="gameButton" name="skipWord" onClick={this.handleClick}>
-            skip
-          </button>
+          <div className="row1">
+            <input
+              className="userGuess"
+              ref="textInput"
+              name="userGuess"
+              placeholder="enter solution here"
+              value = {this.state.started ? this.state.userGuess : ""}
+              onChange = {this.handleInput}
+              disabled = {this.state.started ? "" : "disabled"}
+              // maxlength = "10"
+            />
+            <button className="gameButton" name="submitGuess" onClick={this.handleClick}>
+              submit
+            </button>
+            <button className="gameButton" name="shuffleLetters" onClick={this.handleClick}>
+              shuffle
+            </button>
+            <button className="gameButton" name="skipWord" onClick={this.handleClick}>
+              skip
+            </button>
+          </div>
+          <div className="row2">
+            <button className="startButton" name="startGame" onClick={this.handleClick}>
+              {game && game.started ? "restart" : "start"}
+            </button>
+          </div>
         </div>
-        <button name="startGame" onClick={this.handleClick}>
-          {game && game.started ? "restart" : "start"}
-        </button>
-
-      </>
+      </div>
     );
   }
 }

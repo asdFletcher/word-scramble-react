@@ -32,50 +32,46 @@ body {
   margin: 0 auto;
 }
 
-section {
-  margin: 0 auto;
-}
-
-nav {
-  float: left;
-  text-align: center;
-  background-color: rgb(52, 136, 136); 
-  width: 125px;
-  border: 3px solid rgb(255, 246, 255);
-  border-radius: 10px;
-}
-
-main {
-  margin-left: 165px;
-}
-
 body {
   width: 80%;
   min-width: 500px;
   max-width: 960px;
 }
 
+.nav-and-game-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav {
+  height: 100%;
+  background-color: rgb(52, 136, 136); 
+  border: 3px solid rgb(255, 246, 255);
+  border-radius: 10px;
+}
+
 nav li {
+  width: 100px;
+  margin: 10px;
   font-family: 'Slackey', cursive;
   font-size: 20px;
   background-color: rgb(21, 218, 208);
   color: rgb(225, 246, 255);
   border: 3px solid rgb(255, 246, 255);
   border-radius: 5px;
-
-  width: 100px;
   height: 40px;
-  margin: 10px auto;
   text-align: center;
   padding: 20px 0px;
 }
 
 nav a {
   text-decoration: none;
+  background: purple;
 }
 
 .selectedPage {
-  border-color: navy;
+  /* border-color: navy;
   color: navy;
-  background-color: lightblue;
+  background-color: lightblue; */
 }
