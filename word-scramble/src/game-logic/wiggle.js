@@ -62,45 +62,6 @@ function renderInitial() {
   }
 }
 
-function handleWiggleButton() {
-  var isMidSwap = false;
-  for (var i = 0; i < allLetters.length; i++) {
-    if (allLetters[i].xSwapping || allLetters[i].ySwapping) {
-      isMidSwap = true;
-    }
-  }
-
-  if (!isMidSwap) {
-    for (var i = 0; i < allLetters.length; i++) {
-      allLetters[i].assignWiggle();
-      allLetters[i].wiggle(); // assigns a move
-    }
-  }
-}
-
-function handleSwapButton() {
-  // is it already swapping?
-  var swapIsUnderWay = false;
-  for (var i = 0; i < allLetters.length; i++) {
-    if (allLetters[i].xSwapping === true || allLetters[i].ySwapping === true) {
-      swapIsUnderWay = true;
-    }
-  }
-
-  // if not already swapping, initiate a swap
-  if (!swapIsUnderWay) {
-    // generate a new scramble
-    // TODO: THE SCRAMBLE MIGHT NOT GO HERE!!!
-    // SET THE WORD BEFORE HANDLE SWAP BUTTON
-    // console.log('original word: ', shuffledList[roundCount]);
-    // var newScramble = scrambledWord(roundCount);
-    // console.log('newScramble: ', newScramble);
-
-    // initiate swap
-    initiateSwap();
-  }
-}
-
 // take a swap command and convert it into a move command for each letter
 function initiateSwap() {
   console.log("entering swap");

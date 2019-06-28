@@ -1,71 +1,47 @@
 import { shuffle, scrambleWord } from "../util/util.js";
-import Word from "./Word.js";
+// import Word from "./Word.js";
+import Letter from "./Letter.js";
 
 class Game {
   constructor(options) {
     this.wordList = options.wordList;
     this.anagramList = options.anagramList;
-    this.canvas = options.gameCanvas;
-    this.updateCallback = options.updateCallback;
+    this.gameCanvas = options.gameCanvas;
+    this.timerCanvas = options.timerCanvas;
 
     // game constants
     this.updateInterval = 10; // time in ms between renders
     this.initialTimeAllowed = 60 * 2 * 1000; // start time at beginning in ms
     this.maxTimeAllowed = 60 * 5 * 1000; // max allowed time in ms
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.font = "75px 'Overpass Mono'";
+    this.gameCtx = this.gameCanvas.getContext("2d");
+    this.gameCtx.font = "75px 'Overpass Mono'";
+    this.timerCtx = this.timerCanvas.getContext("2d");
+    this.letterSpacing = 10;
+    this.letterWidth = 35;
+    this.letters = [];
 
     // instance constants
     this.setGameStartSetings();
 
-    // intervals
-    var animate;
-    var timer; // pointer to setInterval for stopping and starting timer
-
-    this.startAnimatingCanvas();
-
-    // Variables for swap animations
-    let oldWordScramble = 0;
-    let newWordScramble;
-    // let SWAPSPEED = 3.5;
-    // let SWAPYAMPLITUDE = 2;
-
-  }
-
-  setGameToStartingState = () => {
-    this.stopAllIntervals();
-    this.clearCanvas();
-
-    this.setGameStartSetings();
-
     this.startAnimatingCanvas();
   }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~~~~~~~ game helper functions ~~~~~~~
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   setGameStartSetings = () => {
     this.roundCount = 0;
     this.score = 0;
     this.currentWordScramble = "";
     this.shuffledList = [];
-    let initialWord = "Ocean Commotion";
-    this.setWord(initialWord);
+    this.setWord("Ocean Commotion");
     this.gameMessage = "";
-    this.startTime = 0; // time user begins playing
-    this.timeLeft = this.initialTimeAllowed; // remaining time
-    this.bonusTime = 0; // accumulated bonus time in ms
-    this.penaltyTime = 0; // accumulated time penalty
-    this.started = false; // tracks whether the game is started for initial render
-  }
-
-  startAnimatingCanvas(){
-    this.animate = setInterval(this.drawCanvas, this.updateInterval);
-    this.updater = setInterval(this.updateCallback, this.updateInterval);
-  }
-
-  start() {
-    this.shuffledWordList = shuffle(this.wordList);
-    this.startTimer();
-    this.roundCount = 0;
-    this.setWord(this.shuffledWordList[this.roundCount]);
+    this.startTime = 0;
+    this.timeLeft = this.initialTimeAllowed;
+    this.bonusTime = 0;
+    this.penaltyTime = 0;
+    this.started = false;
   }
 
   startTimer = () => {
@@ -83,7 +59,7 @@ class Game {
 
   incrementTime = () => {
     // if game hasn't started render 0 sec time elapsed
-    var timeElapsed;
+    let timeElapsed;
     if (this.started) {
       timeElapsed = Date.now() - this.startTime;
     } else {
@@ -102,11 +78,9 @@ class Game {
     // if too much bonus time
     if (this.timeLeft > this.maxTimeAllowed) {
       // calculate extra bonus time
-      var extraBonusTime = this.timeLeft - this.maxTimeAllowed;
-  
+      let extraBonusTime = this.timeLeft - this.maxTimeAllowed;
       //remove the exess bonus time
       this.bonusTime -= extraBonusTime;
-  
       // cap time left
       this.timeLeft = this.maxTimeAllowed;
     }
@@ -131,7 +105,7 @@ class Game {
     this.bonusTime = this.bonusTime + 15000;
     
     // cap bonus time
-    var maxBonusTime = this.maxTimeAllowed - this.initialTimeAllowed;
+    let maxBonusTime = this.maxTimeAllowed - this.initialTimeAllowed;
     if (this.bonusTime > maxBonusTime) {
       this.bonusTime = maxBonusTime;
     }
@@ -141,24 +115,64 @@ class Game {
     this.penaltyTime += 15000;
   }
 
-  // clear canvas to white background , called constantly
-  clearCanvas = () => {
-    this.ctx.fillStyle = "rgb(225, 246, 255)";
-    this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
-  }
-
-  // drawCanvas , called constantly
-  drawCanvas = () => {
-    this.clearCanvas();
-    if (!this.started) {
-      this.ctx.fillStyle = "navy";
-      this.ctx.fillText(this.wordObj.scramble.toUpperCase(), 75, 75);
+  checkAnagram = (altWord) => {
+    if (this.anagramList.includes(altWord.toLowerCase())) {
+      return true;
     } else {
-      this.ctx.fillStyle = "navy";
-      this.ctx.fillText(this.wordObj.scramble.toUpperCase(), 75, 75);
+      return false;
     }
   }
 
+  addPoints = () => {
+    this.score += this.idealWord.length;
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~~~~~~~ game inputs ~~~~~~~
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  handleStart() {
+    this.shuffledWordList = shuffle(this.wordList);
+    this.startTimer();
+    this.roundCount = 0;
+    this.setWord(this.shuffledWordList[this.roundCount]);
+  }
+
+  handleRestart = () => {
+    this.stopAllIntervals();
+    this.clearCanvases();
+    this.setGameStartSetings();
+    this.startAnimatingCanvas();
+  }
+
+  handleSubmit = (input) => {
+    input = input.toUpperCase();
+    this.idealWord = this.idealWord.toUpperCase();
+
+    if (input === this.idealWord || this.checkAnagram(input)) {
+      this.addTime();
+      this.addPoints();
+      this.setNextWord();
+      this.gameMessage = ``;
+    } else if (input === ``) {
+      this.gameMessage = 'Field cannot be empty';
+      this.handleWiggleButton();
+    } else {
+      this.gameMessage = `Nice try, but ${input} didn't seal the deal.`;
+      this.handleWiggleButton();
+    }
+  };
+
+  handleSkipWord = () => {
+    if (this.started){   
+      this.subTime();
+      this.setNextWord();
+      this.gameMessage = `Looks like you had a whale of a time with that one. The correct answer was ${this.shuffledList[this.roundCount - 1]}.`;
+    }
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~~~~~~~ controlling the word ~~~~~~~
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // for advancing the round and setting the next word
   setNextWord = () => {
     this.roundCount++;
@@ -171,70 +185,187 @@ class Game {
 
   // set a specific word
   setWord = (wordStr) => {
-    this.currentWord = wordStr;
-
     // generate scramble:
     if (wordStr === "Ocean Commotion") {
       this.currentWordScramble = wordStr;
     } else {
+      this.letterSpacing = 20;
+      wordStr = wordStr.toUpperCase();
       this.currentWordScramble = scrambleWord(wordStr, wordStr);
     }
-
-    // create word object
-    let canvas = this.canvas;
-    this.wordObj = new Word(wordStr, this.currentWordScramble, canvas.height, canvas.width);
+    this.idealWord = wordStr;
+    this.initializeCanvasWithANewWord(this.currentWordScramble);
   }
 
-  //Button & Input Functionality
-  handleSubmit = (input) => {
-    input = input.toUpperCase();
-    this.currentWord = this.currentWord.toUpperCase();
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~~~~~~~ controlling canvases ~~~~~~~
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  startAnimatingCanvas(){
+    this.animate = setInterval(this.drawCanvases, this.updateInterval);
+  }
 
-    if (input === this.currentWord || this.checkAnagram(input)) {
-      this.addTime();
-      this.addPoints();
-      this.setNextWord();
-      this.gameMessage = ``;
-    } else if (input === ``) {
-      this.gameMessage = 'Field cannot be empty';
-      // handleWiggleButton(); // add wiggle
-    } else {
-      this.gameMessage = `Nice try, but ${input} didn't seal the deal.`;
-      // handleWiggleButton(); // add wiggle
+  // drawCanvas , called constantly
+  drawCanvases = () => {
+    this.clearCanvases();
+    this.drawTimer();
+    this.drawWord();
+  }
+
+  // clear canvases , called constantly
+  clearCanvases = () => {
+    // clear timer canvas
+    this.timerCtx.clearRect(0, 0, this.timerCanvas.width, this.timerCanvas.height);
+
+    // clear game canvas
+    this.gameCtx.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
+  }
+
+  drawTimer = () => {
+    let timerBarWidth = Math.floor((this.timeLeft/this.maxTimeAllowed) * this.timerCanvas.width);
+    if (timerBarWidth % 2 === 1) { timerBarWidth++; }
+    let offset = Math.floor((this.timerCanvas.width - timerBarWidth) / 2);
+
+    let grd = this.timerCtx.createLinearGradient(0, 0, 0, this.timerCanvas.height);
+    grd.addColorStop(0, 'rgb(37, 207, 37)');
+    grd.addColorStop(1, 'rgb(18, 105, 18)');
+    this.timerCtx.fillStyle = grd;
+    this.timerCtx.fillRect(offset,0,timerBarWidth,this.timerCanvas.height);
+  }
+
+  initializeCanvasWithANewWord = (word) => {
+    this.letters = [];
+
+    for(let i = 0; i < word.length; i++) {
+      this.letters.push(new Letter(word[i]))
     }
 
-  };
-
-  addPoints = () => {
-    this.score += this.currentWord.length;
+    // single call to display the letters in their initial position
+    this.renderInitial();
   }
 
-  checkAnagram = (altWord) => {
-    if (this.anagramList.includes(altWord.toLowerCase())) {
-      return true;
-    } else {
-      return false;
+  // drawCanvas , called constantly
+  drawWord = () => {
+    for (let i = 0; i < this.letters.length; i++){
+        // draw the letter
+        this.letters[i].draw(this.gameCtx);
+        //update the letter position
+        this.letters[i].update();
     }
   }
 
-  skipWord = () => {
-    if (this.started){   
-      // clearInput();
-      this.subTime();
-      this.setNextWord();
-      this.gameMessage = ``;
-      // document.getElementById('alerts').innerHTML = `Looks like you had a whale of a time with that one. The correct answer was ${shuffledList[roundCount - 1].toUpperCase()}.`;
-      // resetFocus();
+  // call this function to render the letters initially
+  renderInitial = () => {
+    // Y is about the middle of the canvas
+    let wordY = this.gameCanvas.height/2 + 23; // add an offset to center the word
+
+    // get X coords
+    let letterXCoordinates = this.generateXCoordinates(this.letters.length);
+
+    for (let i = 0; i < this.letters.length; i++){
+        // set initial position
+        this.letters[i].xInitial = letterXCoordinates[i];
+        this.letters[i].yInitial = wordY;
+
+        // immediately set x and y position to initial positions
+        this.letters[i].xPosition = this.letters[i].xInitial;
+        this.letters[i].yPosition = this.letters[i].yInitial;
+
+        this.letters[i].draw(this.gameCtx);
     }
   }
 
-  reset() {
-    this.stopAllIntervals();
+  handleWiggleButton = () => {
+    let isMidSwap = false;
+    for (let i = 0; i < this.letters.length; i++){
+      if (this.letters[i].xSwapping || this.letters[i].ySwapping){
+        isMidSwap = true;
+      }
+    }
+    if (!isMidSwap) {
+      for (let i = 0; i < this.letters.length; i++){
+        this.letters[i].assignWiggle();
+        this.letters[i].wiggle(); // assigns a move
+      }
+    }    
   }
 
-  shuffleLetters = () => {
-    this.wordObj.shuffle();
+  handleSwapButton = () => {
+    this.oldWordScramble = this.currentWordScramble;
+    this.currentWordScramble = scrambleWord(this.idealWord, this.oldWordScramble);
+
+    // is it already swapping?
+    let swapIsUnderWay = false;
+    for (let i = 0; i < this.letters.length; i++){
+        if (this.letters[i].xSwapping === true || this.letters[i].ySwapping === true){
+            swapIsUnderWay = true;
+        }
+    }
+    // if not already swapping, initiate a swap
+    if (!swapIsUnderWay){
+        // initiate swap
+        this.initiateSwap();
+    }
   }
+  
+  // take a swap command and convert it into a move command for each letter
+  initiateSwap = () => {
+    let currentWordScrambleArray = Array.from(this.currentWordScramble);
+    let oldWordScrambleArray = Array.from(this.oldWordScramble);
+
+    let numLetters = currentWordScrambleArray.length;
+    // iterate thru the wordArray and generate new index positions
+    let newIndexes = [];
+    for (let i = 0; i < numLetters; i++){
+
+        // find the index of the letter in the new word
+        let currentLetter = oldWordScrambleArray[i];
+
+        // newIndex is the index of the current letter in the new array
+        let newIndex = currentWordScrambleArray.indexOf(currentLetter);
+
+        // save the new index in the array that keeps track of new positions
+        newIndexes[i] = newIndex;
+
+        // remove instance of that letter, -1 will never be in any letter
+        // because indexOf returns the first instance of the thing in the array
+        currentWordScrambleArray[newIndex] = -1;
+    }
+    
+    // generate new X Y positions
+    let xCoords = this.generateXCoordinates(numLetters);
+
+    // assign moves to new X Y positions
+    for (let i = 0; i < this.letters.length; i++){
+
+        // this is where the magic happens
+        let newX = xCoords[newIndexes[i]];
+
+        // y doesn't ever change
+        let newY = this.letters[i].yInitial;
+
+        // command the move
+        this.letters[i].assignSwap(newX, newY);
+    }
+  }
+
+  // given a word length, returns an array of canvas-centered,
+  // evenly spaced X coordinates
+  generateXCoordinates = (numLetters) =>{
+    let coordArray = [];
+
+    let spacing = this.letterSpacing + this.letterWidth;
+    let wordLength = (spacing * numLetters) - this.letterSpacing;
+
+    // word start X
+    let wordStartX = (this.gameCanvas.width / 2) - (wordLength / 2) - this.letterWidth/2 + 10;
+
+    // calculate word positions and fill array
+    for (let i = 0; i < numLetters; i++){
+        coordArray[i] = wordStartX + spacing * i;
+    }
+    return coordArray;
+  }
+  
 
 }
 

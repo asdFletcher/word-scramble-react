@@ -18,29 +18,23 @@ class GameComponent extends React.Component {
     if (e.keyCode === 13) { this.submitGuess(); }
 
     // right arrow key
-    if (e.keyCode === 39) { this.skipWord(); }
+    if (e.keyCode === 38) { this.skipWord(); }
 
     // left arrow key
-    if (e.keyCode === 37) { this.shuffleLetters(); }
+    if (e.keyCode === 40) { this.shuffleLetters(); }
   }
 
   initGame = () => {
     let newState = {};
     this.setState(newState);
-    const gameCanvas = this.refs.gameCanvas;
     let options = {
       wordList: wordList,
       anagramList: anagramList,
-      gameCanvas: gameCanvas,
-      updateCallback: this.updateCallback,
+      gameCanvas: this.refs.gameCanvas,
+      timerCanvas: this.refs.timerCanvas,
     }
     let game = new Game(options);
     this.setState({game});
-  }
-
-  updateCallback = () => {
-    this.setState({game: this.state.game});
-
   }
 
   handleClick = e => {
@@ -50,10 +44,9 @@ class GameComponent extends React.Component {
   startGame = () => {
     if (this.state.game.started) {
       this.setState({userGuess: ""});
-      this.state.game.setGameToStartingState();
+      this.state.game.handleRestart();
     } else {
-      this.state.game.start();
-      this.setState({started: true});
+      this.state.game.handleStart();
       this.setState({userGuess: ""});
     }
     setTimeout(() => {this.setFocusToInput();}, 1);
@@ -71,12 +64,12 @@ class GameComponent extends React.Component {
   };
 
   shuffleLetters = () => {
-    this.state.game.shuffleLetters()
-    this.setFocusToInput()
+    this.state.game.handleSwapButton()
+    this.setFocusToInput();
   };
 
   skipWord = () => {
-    this.state.game.skipWord();
+    this.state.game.handleSkipWord();
     this.setState({userGuess: ""});
     this.setFocusToInput()
   };
@@ -87,18 +80,15 @@ class GameComponent extends React.Component {
 
   render() {
     let game = this.state.game;
-    let timeLeft = game && game.timeLeft;
-    let maxTimeAllowed = game && game.maxTimeAllowed;
-    let timerBarWidth = (timeLeft/maxTimeAllowed) * 600;
 
     return (
       <div className="gameContainer">
         <div className="timerBarContainer">
-          <div className="timerBar" style={{width: timerBarWidth}}></div>
+          <canvas className="timerBar" ref="timerCanvas" width='705' height='20'/>
         </div>
         <div className="canvas-container">
           <h2 className="score">{game && game.started ? game.score : ""}</h2>
-          <canvas className="game-canvas" ref="gameCanvas" width="705" height="190" />
+          <canvas className="game-canvas" ref="gameCanvas" width='705' height='190'/>
         </div>
 
         <div className="game-message" style={{height: 25}}>{game? game.gameMessage : ""}</div>
@@ -129,7 +119,6 @@ class GameComponent extends React.Component {
               {game && game.started ? "Restart Game" : "Start Game!"}
             </button>
           </div>
-
         </div>
       </div>
     );
