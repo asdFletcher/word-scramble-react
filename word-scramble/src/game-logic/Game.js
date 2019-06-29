@@ -8,6 +8,7 @@ class Game {
     this.anagramList = options.anagramList;
     this.gameCanvas = options.gameCanvas;
     this.timerCanvas = options.timerCanvas;
+    this.endGameCallback = options.endGameCallback;
 
     // game constants
     this.updateInterval = 10; // time in ms between renders
@@ -16,7 +17,6 @@ class Game {
     this.gameCtx = this.gameCanvas.getContext("2d");
     this.gameCtx.font = "75px 'Overpass Mono'";
     this.timerCtx = this.timerCanvas.getContext("2d");
-    this.letterSpacing = 10;
     this.letterWidth = 35;
     this.letters = [];
 
@@ -34,7 +34,7 @@ class Game {
     this.roundCount = 0;
     this.score = 0;
     this.currentWordScramble = "";
-    this.shuffledList = [];
+    this.shuffledWordList = [];
     this.setWord("Ocean Commotion");
     this.gameMessage = "";
     this.startTime = 0;
@@ -42,6 +42,7 @@ class Game {
     this.bonusTime = 0;
     this.penaltyTime = 0;
     this.started = false;
+    this.isOver = false;
   }
 
   startTimer = () => {
@@ -87,7 +88,8 @@ class Game {
   }
 
   endGame = () => {
-    console.log(`Game has ended`);
+    this.isOver = true;
+    this.endGameCallback(this);
   }
 
   resetTimer = () => {
@@ -166,7 +168,7 @@ class Game {
     if (this.started){   
       this.subTime();
       this.setNextWord();
-      this.gameMessage = `Looks like you had a whale of a time with that one. The correct answer was ${this.shuffledList[this.roundCount - 1]}.`;
+      this.gameMessage = `Looks like you had a whale of a time with that one. The correct answer was ${this.shuffledWordList[this.roundCount - 1].toUpperCase()}.`;
     }
   }
 
@@ -187,6 +189,7 @@ class Game {
   setWord = (wordStr) => {
     // generate scramble:
     if (wordStr === "Ocean Commotion") {
+      this.letterSpacing = 10;
       this.currentWordScramble = wordStr;
     } else {
       this.letterSpacing = 20;

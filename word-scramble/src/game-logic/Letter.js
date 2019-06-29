@@ -34,22 +34,22 @@ class Letter {
   rand = (min, max) => {
     // credit https://stackoverflow.com/questions/8611830/javascript-random-positive-or-negative-number
     // TODO: add this credit to the readme.md ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    var rand = (Math.floor(Math.random()*(max-min))+2) * (Math.random() < 0.5 ? -1 : 1);
+    let rand = (Math.floor(Math.random()*(max-min))+2) * (Math.random() < 0.5 ? -1 : 1);
     return rand;
   }
 
   // a wiggle is a short move to a random place close by
   wiggle = () => {
-    var max = 20; 
-    var min = 10;
-    var randomX = this.rand(min, max);
-    var randomY = this.rand(min, max);
+    let max = 20; 
+    let min = 10;
+    let randomX = this.rand(min, max);
+    let randomY = this.rand(min, max);
     // confine the random number to be within 10px of the initial position
-    var close = false;
+    let close = false;
     while (!close){
       // calculate move distance
-      var xDistFromHome = (this.xPosition + randomX) - this.xInitial;
-      var yDistFromHome = (this.yPosition + randomY) - this.yInitial;
+      let xDistFromHome = (this.xPosition + randomX) - this.xInitial;
+      let yDistFromHome = (this.yPosition + randomY) - this.yInitial;
 
       if (Math.abs(xDistFromHome) < 12 && Math.abs(yDistFromHome) < 12){
           close = true;
@@ -93,8 +93,8 @@ class Letter {
   }
 
   incrementPosition = () => {
-    var xDistance = this.xDestination - this.xPosition;
-    var yDistance = this.yDestination - this.yPosition;
+    let xDistance = this.xDestination - this.xPosition;
+    let yDistance = this.yDestination - this.yPosition;
 
     // x motion for all moves
     if (Math.abs(xDistance) > 3 ) {
@@ -183,15 +183,16 @@ class Letter {
     // which ranges from 0 to 1, which is too low
     // so we need to scale it by some arbitrary factor to make the motion visible
 
-    var totalXTravel = this.xDestination - this.xInitial
+    let totalXTravel = this.xDestination - this.xInitial
 
     // if letter isn't already at it's destination
+    let yVelocity;
     if (Math.abs(totalXTravel) > 0) {
-        var pctComplete = (this.xPosition - this.xInitial) / totalXTravel;
-        var angle = pctComplete * Math.PI; // in radians
-        var yVelocity = Math.cos(angle) * this.SWAPYAMPLITUDE;
+        let pctComplete = (this.xPosition - this.xInitial) / totalXTravel;
+        let angle = pctComplete * Math.PI; // in radians
+        yVelocity = Math.cos(angle) * this.SWAPYAMPLITUDE;
     } else {
-        var yVelocity = 0;
+        yVelocity = 0;
     }
 
     // apply new velocity to the letter

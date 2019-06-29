@@ -1,6 +1,11 @@
 import React from "react";
 import Game from "../game-logic/Game.js";
 import { wordList, anagramList } from "../lib/wordbank.js";
+import SubmitScore from './SubmitScore.js';
+
+const If = props => {
+  return !!props.condition ? props.children : null;
+};
 
 class GameComponent extends React.Component {
   state = {
@@ -32,8 +37,13 @@ class GameComponent extends React.Component {
       anagramList: anagramList,
       gameCanvas: this.refs.gameCanvas,
       timerCanvas: this.refs.timerCanvas,
+      endGameCallback: this.endGameCallback,
     }
     let game = new Game(options);
+    this.setState({game});
+  }
+
+  endGameCallback = (game) => {
     this.setState({game});
   }
 
@@ -56,22 +66,26 @@ class GameComponent extends React.Component {
     this.refs.textInput.focus();
   }
   submitGuess = () => {
-    if (this.state.game.started) {
+    if (this.state.game.started && !this.state.game.isOver) {
       this.state.game.handleSubmit(this.state.userGuess);
       this.setState({userGuess: ""});
+      this.setFocusToInput();
     }
-    this.setFocusToInput()
   };
 
   shuffleLetters = () => {
-    this.state.game.handleSwapButton()
-    this.setFocusToInput();
+    if (this.state.game.started && !this.state.game.isOver) {
+      this.state.game.handleSwapButton()
+      this.setFocusToInput();
+    }
   };
 
   skipWord = () => {
-    this.state.game.handleSkipWord();
-    this.setState({userGuess: ""});
-    this.setFocusToInput()
+    if (this.state.game.started && !this.state.game.isOver) {
+      this.state.game.handleSkipWord();
+      this.setState({userGuess: ""});
+      this.setFocusToInput();
+    }
   };
 
   handleInput = e => {
@@ -80,18 +94,33 @@ class GameComponent extends React.Component {
 
   render() {
     let game = this.state.game;
+    if (game) {
+      var gameMessage = game? game.gameMessage : "";
+      var score = game.started ? game.score : "";
+      var startButtonText = game.started ? "Restart Game" : "Start Game!";
+      var placeholderText = game.started? "" : "enter solution here";
+      var disableInput = !game.started || game.isOver ? "disabled" : "";
+      var canvasDisplay = game.isOver? "none" : "";
+      var canvasContainerClasses = game.isOver? "canvas-container gameOver" : "canvas-container active";
+    }
 
+    let canvasWidth = 705;
+    let canvasHeight = 190;
     return (
       <div className="gameContainer">
         <div className="timerBarContainer">
-          <canvas className="timerBar" ref="timerCanvas" width='705' height='20'/>
+          <canvas className="timerBar" ref="timerCanvas" width={canvasWidth} height='20'/>
         </div>
-        <div className="canvas-container">
-          <h2 className="score">{game && game.started ? game.score : ""}</h2>
-          <canvas className="game-canvas" ref="gameCanvas" width='705' height='190'/>
+        <div className={canvasContainerClasses}>
+          <h2 className="score">{score}</h2>
+          <If condition={game && game.isOver}>
+              <SubmitScore score={score} width={canvasWidth} height={canvasHeight}/>
+          </If>
+          <canvas className="game-canvas" ref="gameCanvas" width={canvasWidth} height={canvasHeight} style={{display: canvasDisplay}}/>
         </div>
 
-        <div className="game-message" style={{height: 25}}>{game? game.gameMessage : ""}</div>
+
+        <div className="game-message">{gameMessage}</div>
 
         <div className="input-and-buttons-row">
           <div className="row1">
@@ -99,27 +128,37 @@ class GameComponent extends React.Component {
               className="userGuess"
               ref="textInput"
               name="userGuess"
-              placeholder={game && game.started? "" : "enter solution here"}
-              value = {game && game.started ? this.state.userGuess : ""}
-              onChange = {this.handleInput}
-              disabled = {game && game.started ? "" : "disabled"}
-            />
-            <button className="gameButton" name="submitGuess" onClick={this.handleClick}>
-              submit
+              placeholder={placeholderText}
+              value={this.state.userGuess}
+              onChange={this.handleInput}
+              disabled={disableInput}/>
+            <button 
+              className="gameButton" 
+              name="submitGuess" 
+              onClick={this.handleClick}>
+              Submit
             </button>
-            <button className="gameButton" name="shuffleLetters" onClick={this.handleClick}>
-              shuffle
+            <button 
+              className="gameButton" 
+              name="shuffleLetters" 
+              onClick={this.handleClick}>
+              Shuffle
             </button>
-            <button className="gameButton" name="skipWord" onClick={this.handleClick}>
-              skip
+            <button 
+              className="gameButton" 
+              name="skipWord" 
+              onClick={this.handleClick}>
+              Skip
             </button>
+
           </div>
           <div className="row2">
             <button className="startButton" name="startGame" onClick={this.handleClick}>
-              {game && game.started ? "Restart Game" : "Start Game!"}
+              {startButtonText}
             </button>
           </div>
         </div>
+        
       </div>
     );
   }
