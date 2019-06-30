@@ -224,15 +224,24 @@ class Game {
   }
 
   drawTimer = () => {
-    let timerBarWidth = Math.floor((this.timeLeft/this.maxTimeAllowed) * this.timerCanvas.width);
-    if (timerBarWidth % 2 === 1) { timerBarWidth++; }
-    let offset = Math.floor((this.timerCanvas.width - timerBarWidth) / 2);
+    // let timerBarWidth = Math.floor((this.timeLeft/this.maxTimeAllowed) * this.timerCanvas.width);
+    // if (timerBarWidth % 2 === 1) { timerBarWidth++; }
+    // let offset = Math.floor((this.timerCanvas.width - timerBarWidth) / 2);
 
-    let grd = this.timerCtx.createLinearGradient(0, 0, 0, this.timerCanvas.height);
-    grd.addColorStop(0, 'rgb(37, 207, 37)');
-    grd.addColorStop(1, 'rgb(18, 105, 18)');
-    this.timerCtx.fillStyle = grd;
-    this.timerCtx.fillRect(offset,0,timerBarWidth,this.timerCanvas.height);
+    // let grd = this.timerCtx.createLinearGradient(0, 0, 0, this.timerCanvas.height);
+    // grd.addColorStop(0, 'rgb(37, 207, 37)');
+    // grd.addColorStop(1, 'rgb(18, 105, 18)');
+    // this.timerCtx.fillStyle = grd;
+    // this.timerCtx.fillRect(offset,0,timerBarWidth,this.timerCanvas.height);
+    // this.timerCtx.fillRect(0,0,this.timerCanvas.width,this.timerCanvas.height)
+    
+    let width = Math.floor((this.timeLeft/this.maxTimeAllowed) * 675);
+
+    if (width % 2 === 1) {
+      width++;
+    }
+    this.timerCanvas.width = width;
+    console.log(``);
   }
 
   initializeCanvasWithANewWord = (word) => {

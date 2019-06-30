@@ -1,4 +1,4 @@
-$gameWidth: 713px;
+$gameWidth: 719px;
 
 * {
   // outline: 1px solid red;
@@ -9,13 +9,16 @@ $gameWidth: 713px;
 /* ~~~~~~~~~~~~~~~~ */
 
 .timerBar {
+  display: block;
+  background-image: linear-gradient(rgb(37, 207, 37), rgb(18, 105, 18));
+  height: 18px;
+  box-shadow: 2px 2px navy;
   margin: 20px auto;
   margin-top: 0px;
+  border: 1px solid navy;
 }
 
 .timerBarContainer {
-  box-sizing: border-box;
-
   display: flex;
   justify-content: center;
   width: $gameWidth;
