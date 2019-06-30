@@ -1,0 +1,80 @@
+// apparently overlay is deprecated
+html {
+  overflow-y: overlay;
+}
+
+/* ~~~~~~~~~~~~~~~~ */
+/* headers */
+/* ~~~~~~~~~~~~~~~~ */
+header {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-family: 'Slackey', cursive;
+  font-size: 60px;
+  text-align: center;
+  text-shadow: 4px 4px rgb(21, 218, 208);
+  margin-bottom: 0px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+/* ~~~~~~~~~~~~~~~~ */
+/* body */
+/* ~~~~~~~~~~~~~~~~ */
+body {
+  background-color: rgb(51, 134, 167);
+  color: rgb(225, 246, 255);
+  font-family: 'Hind Siliguri', sans-serif;
+  margin: 0 auto;
+}
+
+body {
+  width: 80%;
+  min-width: 500px;
+  max-width: 960px;
+}
+
+.nav-and-game-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav {
+  height: 100%;
+  background-color: rgb(52, 136, 136); 
+  border: 3px solid rgb(255, 246, 255);
+  border-radius: 10px;
+}
+
+nav li {
+  width: 100px;
+  margin: 10px;
+  font-family: 'Slackey', cursive;
+  font-size: 20px;
+  background-color: rgb(21, 218, 208);
+  color: rgb(225, 246, 255);
+  border: 3px solid rgb(255, 246, 255);
+  border-radius: 5px;
+  height: 40px;
+  text-align: center;
+  padding: 20px 0px;
+}
+
+nav a {
+  text-decoration: none;
+  background: purple;
+}
+
+
+nav .selected li {
+    border-color: navy;
+  color: navy;
+  background-color: lightblue;
+}

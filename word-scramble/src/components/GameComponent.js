@@ -1,70 +1,167 @@
 import React from "react";
 import Game from "../game-logic/Game.js";
+import { wordList, anagramList } from "../lib/wordbank.js";
+import SubmitScore from './SubmitScore.js';
+
+const If = props => {
+  return !!props.condition ? props.children : null;
+};
 
 class GameComponent extends React.Component {
   state = {
-    userGuess: ""
+    userGuess: "",
+    game: undefined,
   };
 
   componentDidMount() {
-    const gameCanvas = this.refs.gameCanvas;
-    const ctx = gameCanvas.getContext("2d");
-    ctx.font = "75px 'Overpass Mono'";
-    console.log(`ctx: `, ctx);
-    ctx.fillText("test", 210, 75);
-
-    let a = new Game();
-    this.setState({game: new Game()});
+    this.initGame();
+    document.addEventListener('keydown', this.handleKeyDown);
   }
-  // timer bar
+
+  handleKeyDown = (e) => {
+    // enter key
+    if (e.keyCode === 13) { this.submitGuess(); }
+
+    // right arrow key
+    if (e.keyCode === 38) { this.skipWord(); }
+
+    // left arrow key
+    if (e.keyCode === 40) { this.shuffleLetters(); }
+  }
+
+  initGame = () => {
+    let newState = {};
+    this.setState(newState);
+    let options = {
+      wordList: wordList,
+      anagramList: anagramList,
+      gameCanvas: this.refs.gameCanvas,
+      timerCanvas: this.refs.timerCanvas,
+      endGameCallback: this.endGameCallback,
+    }
+    let game = new Game(options);
+    this.setState({game});
+  }
+
+  endGameCallback = (game) => {
+    this.setState({game});
+  }
+
   handleClick = e => {
-    // console.log(`a: `, e.target.name);
     this[e.target.name]();
   };
 
   startGame = () => {
-    console.log(`🍊`);
-    this.state.game.print()
+    if (this.state.game.started) {
+      this.setState({userGuess: ""});
+      this.state.game.handleRestart();
+    } else {
+      this.state.game.handleStart();
+      this.setState({userGuess: ""});
+    }
+    setTimeout(() => {this.setFocusToInput();}, 1);
+  };
 
-  };
+  setFocusToInput = () => {
+    this.refs.textInput.focus();
+  }
   submitGuess = () => {
-    console.log(`🍎 submitting guess: `, this.state.userGuess);
+    if (this.state.game.started && !this.state.game.isOver) {
+      this.state.game.handleSubmit(this.state.userGuess);
+      this.setState({userGuess: ""});
+      this.setFocusToInput();
+    }
   };
+
   shuffleLetters = () => {
-    console.log(`🍏`);
+    if (this.state.game.started && !this.state.game.isOver) {
+      this.state.game.handleSwapButton()
+      this.setFocusToInput();
+    }
   };
+
   skipWord = () => {
-    console.log(`🍓`);
+    if (this.state.game.started && !this.state.game.isOver) {
+      this.state.game.handleSkipWord();
+      this.setState({userGuess: ""});
+      this.setFocusToInput();
+    }
   };
+
   handleInput = e => {
-    // console.log(`🐤: `, e.target.value);
-    this.setState({ userGuess: e.target.value });
+    this.setState({ userGuess: e.target.value.toUpperCase() });
   };
 
   render() {
+    let game = this.state.game;
+    if (game) {
+      var gameMessage = game? game.gameMessage : "";
+      var score = game.started ? game.score : "";
+      var startButtonText = game.started ? "Restart Game" : "Start Game!";
+      var placeholderText = game.started? "" : "enter solution here";
+      var disableInput = !game.started || game.isOver ? "disabled" : "";
+      var canvasDisplay = game.isOver? "none" : "";
+      var canvasContainerClasses = game.isOver? "canvas-container gameOver" : "canvas-container active";
+    }
+
+    let canvasWidth = 705;
+    let canvasHeight = 190;
     return (
-      <>
-        <canvas ref="gameCanvas" width="705" height="190" />
-        <input
-          name="userGuess"
-          // value="enter solution here"
-          placeholder="enter solution here"
-          onChange={this.handleInput}
-        />
-        <button name="startGame" onClick={this.handleClick}>
-          start game
-        </button>
-        <button name="submitGuess" onClick={this.handleClick}>
-          submit
-        </button>
-        <button name="shuffleLetters" onClick={this.handleClick}>
-          shuffle
-        </button>
-        <button name="skipWord" onClick={this.handleClick}>
-          skip
-        </button>
-      </>
+      <div className="gameContainer">
+        <div className="timerBarContainer">
+          <canvas className="timerBar" ref="timerCanvas" width={canvasWidth} height='20'/>
+        </div>
+        <div className={canvasContainerClasses}>
+          <h2 className="score">{score}</h2>
+          <If condition={game && game.isOver}>
+              <SubmitScore score={score} width={canvasWidth} height={canvasHeight}/>
+          </If>
+          <canvas className="game-canvas" ref="gameCanvas" width={canvasWidth} height={canvasHeight} style={{display: canvasDisplay}}/>
+        </div>
+
+
+        <div className="game-message">{gameMessage}</div>
+
+        <div className="input-and-buttons-row">
+          <div className="row1">
+            <input
+              className="userGuess"
+              ref="textInput"
+              name="userGuess"
+              placeholder={placeholderText}
+              value={this.state.userGuess}
+              onChange={this.handleInput}
+              disabled={disableInput}/>
+            <button 
+              className="gameButton" 
+              name="submitGuess" 
+              onClick={this.handleClick}>
+              Submit
+            </button>
+            <button 
+              className="gameButton" 
+              name="shuffleLetters" 
+              onClick={this.handleClick}>
+              Shuffle
+            </button>
+            <button 
+              className="gameButton" 
+              name="skipWord" 
+              onClick={this.handleClick}>
+              Skip
+            </button>
+
+          </div>
+          <div className="row2">
+            <button className="startButton" name="startGame" onClick={this.handleClick}>
+              {startButtonText}
+            </button>
+          </div>
+        </div>
+        
+      </div>
     );
   }
 }
+
 export default GameComponent;
