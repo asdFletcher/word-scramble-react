@@ -1,5 +1,4 @@
 import { shuffle, scrambleWord } from "../util/util.js";
-// import Word from "./Word.js";
 import Letter from "./Letter.js";
 
 class Game {
@@ -9,6 +8,7 @@ class Game {
     this.gameCanvas = options.gameCanvas;
     this.timerCanvas = options.timerCanvas;
     this.endGameCallback = options.endGameCallback;
+    this.updateScore = options.updateScoreCallback;
 
     // game constants
     this.updateInterval = 10; // time in ms between renders
@@ -43,6 +43,7 @@ class Game {
     this.penaltyTime = 0;
     this.started = false;
     this.isOver = false;
+    this.updateScore(this.score);
   }
 
   startTimer = () => {
@@ -127,6 +128,7 @@ class Game {
 
   addPoints = () => {
     this.score += this.idealWord.length;
+    this.updateScore(this.score);
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -241,7 +243,6 @@ class Game {
       width++;
     }
     this.timerCanvas.width = width;
-    console.log(``);
   }
 
   initializeCanvasWithANewWord = (word) => {

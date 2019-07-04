@@ -2,10 +2,28 @@ import React from "react";
 import Game from "../game-logic/Game.js";
 import { wordList, anagramList } from "../lib/wordbank.js";
 import SubmitScore from './SubmitScore.js';
+import { connect } from 'react-redux';
+import * as actions from '../store/actions.js';
+
+import { Redirect } from 'react-router-dom'
 
 const If = props => {
   return !!props.condition ? props.children : null;
 };
+
+
+const mapStateToProps = (state) => {
+  console.log(`game component MSTP: `, state);
+  return {
+    score: state.score,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateScore: (payload) => dispatch(actions.updateScore(payload)),
+  }
+}
 
 class GameComponent extends React.Component {
   state = {
@@ -38,6 +56,7 @@ class GameComponent extends React.Component {
       gameCanvas: this.refs.gameCanvas,
       timerCanvas: this.refs.timerCanvas,
       endGameCallback: this.endGameCallback,
+      updateScoreCallback: this.updateScore,
     }
     let game = new Game(options);
     this.setState({game});
@@ -45,6 +64,10 @@ class GameComponent extends React.Component {
 
   endGameCallback = (game) => {
     this.setState({game});
+  }
+
+  updateScore = (score) => {
+    this.props.updateScore(score);
   }
 
   handleClick = e => {
@@ -89,7 +112,7 @@ class GameComponent extends React.Component {
   };
 
   handleInput = e => {
-    this.setState({ userGuess: e.target.value.toUpperCase() });
+    this.setState({userGuess: e.target.value.toUpperCase()});
   };
 
   render() {
@@ -164,4 +187,4 @@ class GameComponent extends React.Component {
   }
 }
 
-export default GameComponent;
+export default connect(mapStateToProps, mapDispatchToProps)(GameComponent);

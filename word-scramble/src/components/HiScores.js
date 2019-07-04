@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'antd';
 import '../../node_modules/antd/dist/antd.css';
+import { NavLink } from "react-router-dom";
 
 const columns = [
   {
@@ -20,8 +21,6 @@ const columns = [
   },
 ];
 
-
-
 class HiScores extends React.Component {
   state = {
     scores: [],
@@ -31,7 +30,6 @@ class HiScores extends React.Component {
     // emit action to get scores
     // emit action to set loading true
     // when scores load emit action to set loading false
-    console.log(`🍏  hi scores mounted`);
     try {
       let url = `http://localhost:3001/get-scores`;
       let res = await fetch(url);
@@ -43,11 +41,6 @@ class HiScores extends React.Component {
     } catch (err) {
       console.error(`error retrieving scores from the server: `, err);
     }
-  }
-
-  getColumns = () => {
-    return 
-    
   }
 
   render() {
@@ -65,6 +58,7 @@ class HiScores extends React.Component {
             // loading={true}
              />
         </ul>
+        <button><NavLink to="/play-game">Play Game</NavLink></button>
       </div>
     );
   }

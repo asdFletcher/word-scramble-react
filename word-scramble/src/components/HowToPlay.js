@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 
 const HowToPlay = () => {
   return (
@@ -20,7 +21,7 @@ const HowToPlay = () => {
 
       <p id="last-p">When you're ready to play, click the button below to go to the game page.</p>
 
-      <button>Play Game</button>
+      <button><NavLink to="/play-game">Play Game</NavLink></button>
     </div>
   );
 }

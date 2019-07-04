@@ -15,7 +15,7 @@ h3 {
 .ant-table-wrapper {
   padding: 10px;
   display: inline-block;
-  height: 500px;
+  height: 100%;
   overflow: auto;
   margin-bottom: 20px;
   border-radius: 15px;
@@ -77,7 +77,6 @@ td:last-child{
 /* ~~~~~~~~~~~~~~~~ */
 /* Buttons */
 /* ~~~~~~~~~~~~~~~~ */
-
 button {
   display: block;
   margin-top: 15px;
