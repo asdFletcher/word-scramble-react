@@ -1,7 +1,7 @@
 /* ~~~~~~~~~~~~~~~~ */
 /* Timer */
 /* ~~~~~~~~~~~~~~~~ */
-.timerBar {
+.timer-bar {
   display: block;
   background-image: linear-gradient(rgb(37, 207, 37), rgb(18, 105, 18));
   height: 18px;
@@ -11,7 +11,7 @@
   border: 1px solid $accentColor;
 }
 
-.timerBarContainer {
+.timer-bar-container {
   display: flex;
   justify-content: center;
   width: $gameWidth;
@@ -124,7 +124,7 @@
     }
   }
 
-  .userGuess {
+  .user-guess {
     width: 430px;
     height: 100px;
     font-size: 50px;
@@ -136,7 +136,7 @@
     margin-right: 2px;
   }
 
-  .userGuess::placeholder {
+  .user-guess::placeholder {
     font-size: 30px;
   }
 }
@@ -147,7 +147,7 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
   transition: .5s;
 }
 
-.gameContainer {
+.game-container {
   margin-left: 34px;
   width: 100%;
   align-items: flex-start;

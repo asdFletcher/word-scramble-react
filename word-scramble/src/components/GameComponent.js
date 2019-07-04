@@ -107,9 +107,9 @@ class GameComponent extends React.Component {
     let canvasWidth = 705;
     let canvasHeight = 190;
     return (
-      <div className="gameContainer">
-        <div className="timerBarContainer">
-          <canvas className="timerBar" ref="timerCanvas" width={canvasWidth} height='20'/>
+      <div className="game-container">
+        <div className="timer-bar-container">
+          <canvas className="timer-bar" ref="timerCanvas" width={canvasWidth} height='20'/>
         </div>
         <div className={canvasContainerClasses}>
           <h2 className="score">{score}</h2>
@@ -125,7 +125,7 @@ class GameComponent extends React.Component {
         <div className="input-and-buttons-row">
           <div className="row1">
             <input
-              className="userGuess"
+              className="user-guess"
               ref="textInput"
               name="userGuess"
               placeholder={placeholderText}
