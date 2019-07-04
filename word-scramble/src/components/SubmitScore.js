@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 const mapStateToProps = (state) => {
   console.log(`submit score MSTP: `, state);
   return {
-    score: state.score,
+    score: state.userScore,
     id: state.id,
   }
 }
@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addScoreID: (payload) => dispatch(actions.addScoreID(payload)),
+    updateUserName: (payload) => dispatch(actions.updateUserName(payload)),
   }
 }
 
@@ -35,7 +36,10 @@ class SubmitScore extends React.Component {
       score: this.props.score,
       id: id,
     }
+
     this.props.addScoreID(id);
+    this.props.updateUserName(scoreData.name);
+    
     await fetchPost('http://localhost:3001/save-score', scoreData);
     this.setState({redirect: true});
   }

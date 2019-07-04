@@ -12,10 +12,10 @@ h3 {
 /* ~~~~~~~~~~~~~~~~ */
 /* Table */
 /* ~~~~~~~~~~~~~~~~ */
+// both score tables
 .ant-table-wrapper {
   padding: 10px;
   display: inline-block;
-  height: 100%;
   overflow: auto;
   margin-bottom: 20px;
   border-radius: 15px;
@@ -111,4 +111,32 @@ a:hover li:hover {
   transition: .5s;
 }
 
+// .belongsToCurrentUser {
+//   background-color: rgb(199, 221, 87) !important;
+// }
 
+// credit: @GosiaP https://codepen.io/GosiaP/pen/LrzWVV
+.belongsToCurrentUser td:nth-of-type(1){
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  background-image: linear-gradient(130deg, #00a4bf 8.33%, #66cc66 8.33%, #66cc66 16.67%, #eb672d 16.67%, #eb672d 25%, #fdbc1b 25%, #fdbc1b 33.33%, #a1a1ff 33.33%, #a1a1ff 41.67%, #df248f 41.67%, #df248f 50%, #00a4bf 50%, #00a4bf 58.33%, #66cc66 58.33%, #66cc66 66.67%, #eb672d 66.67%, #eb672d 75%, #fdbc1b 75%, #fdbc1b 83.33%, #a1a1ff 83.33%, #a1a1ff 91.67%, #df248f 91.67%, #df248f 100%);
+  background-size: 195.81px 233.36px; 
+  animation: 2.2s btn-stripes linear infinite;}
+
+@-webkit-keyframes btn-stripes {
+    from { background-position: 0 0; }
+    to { background-position: -195.81px 0; }
+}
+@-o-keyframes btn-stripes {
+    from { background-position: 0 0; }
+    to { background-position: -195.81px 0; }
+}
+@-moz-keyframes btn-stripes {
+    from { background-position: 0 0; }
+    to { background-position: -195.81px 0; }
+}
+@keyframes btn-stripes {
+    from { background-position: 0 0; }
+    to { background-position: -195.81px 0; }
+}

@@ -2,6 +2,9 @@ import React from 'react';
 import { Table } from 'antd';
 import '../../node_modules/antd/dist/antd.css';
 import { NavLink } from "react-router-dom";
+import { connect } from 'react-redux';
+import * as actions from '../store/actions.js';
+import ScoreReport from './ScoreReport.js';
 
 const columns = [
   {
@@ -21,47 +24,70 @@ const columns = [
   },
 ];
 
-class HiScores extends React.Component {
-  state = {
-    scores: [],
-  };
+const mapStateToProps = (state) => {
+  return {
+    id: state.id,
+    topTenScores: state.topTenScores,
+    scoresLoading: state.scoresLoading,
+  }
+}
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateIsTopTen: (payload) => dispatch(actions.updateIsTopTen(payload)),
+    updateScoresFromDB: (payload) => dispatch(actions.updateScoresFromDB(payload)),
+    updateScoresLoading: (payload) => dispatch(actions.updateScoresLoading(payload)),
+  }
+}
+
+class HiScores extends React.Component {
   async componentDidMount() {
-    // emit action to get scores
-    // emit action to set loading true
-    // when scores load emit action to set loading false
     try {
       let url = `http://localhost:3001/get-scores`;
-      let res = await fetch(url);
+      this.props.updateScoresLoading(true);
+      let res = await fetch(url)
+      this.props.updateScoresLoading(false);
       let data = await res.json();
-      data.forEach((score, index) => {
+
+      // assign rank and detect if current user is in top 10
+      await data.forEach(async (score, index) => {
         score.rank = index + 1;
+        if (this.props.id && this.props.id === score.id) {
+          score.className = 'belongsToCurrentUser';
+          this.props.updateIsTopTen(true);
+        }
       });
-      this.setState({scores: data});
+      
+      this.props.updateScoresFromDB(data);
     } catch (err) {
       console.error(`error retrieving scores from the server: `, err);
     }
   }
 
   render() {
-    console.log(`🍊 hi scores render: `, this.state);
-    let scores = this.state.scores;
+    let scores = this.props.topTenScores;
+    let scoresLoading = this.props.scoresLoading;
+
     return (
       <div className="score-page-container">
         <h3>Hi Scores</h3>
         <ul>
-          <Table 
+          <Table
+            className={'top-ten-score-table'}
             columns={columns} 
             dataSource={scores}
             pagination={false}
-            // bordered={true}
-            // loading={true}
+            rowClassName={ (record) => record.className}
+            loading={scoresLoading}
              />
         </ul>
-        <button><NavLink to="/play-game">Play Game</NavLink></button>
+        <ScoreReport />
+        <button className="startButton"><NavLink to="/play-game">Play Game</NavLink></button>
       </div>
     );
   }
 }
 
-export default HiScores;
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HiScores);

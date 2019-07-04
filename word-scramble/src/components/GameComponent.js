@@ -15,7 +15,7 @@ const If = props => {
 const mapStateToProps = (state) => {
   console.log(`game component MSTP: `, state);
   return {
-    score: state.score,
+    score: state.userScore,
   }
 }
 
@@ -137,7 +137,7 @@ class GameComponent extends React.Component {
         <div className={canvasContainerClasses}>
           <h2 className="score">{score}</h2>
           <If condition={game && game.isOver}>
-              <SubmitScore score={score} width={canvasWidth} height={canvasHeight}/>
+              <SubmitScore width={canvasWidth} height={canvasHeight}/>
           </If>
           <canvas className="game-canvas" ref="gameCanvas" width={canvasWidth} height={canvasHeight} style={{display: canvasDisplay}}/>
         </div>
