@@ -35,7 +35,7 @@ bios.push({
 const Twitter = (props) => {
   if (props.person.twitter) {
     return (
-      <a href={props.person.twitter} target="_blank">
+      <a href={props.person.twitter} target="_blank" rel="noopener noreferrer">
         <i className="icon-twitter"></i>
       </a>
     );
@@ -45,7 +45,7 @@ const Twitter = (props) => {
 const Linkedin = (props) => {
   if (props.person.linkedin) {
     return (
-      <a href={props.person.linkedin} target="_blank">
+      <a href={props.person.linkedin} target="_blank" rel="noopener noreferrer">
         <i className="icon-linkedin-sign"></i>
       </a>
     );
@@ -55,7 +55,7 @@ const Linkedin = (props) => {
 const Github = (props) => {
   if (props.person.github) {
     return (
-      <a href={props.person.github} target="_blank">
+      <a href={props.person.github} target="_blank" rel="noopener noreferrer">
         <i className="icon-github"></i>
       </a>
     );

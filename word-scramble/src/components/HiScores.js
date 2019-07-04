@@ -1,9 +1,16 @@
 import React from 'react';
 
-const HiScores = () => {
-  return (
-    <div>hi scores</div>
-  );
+class HiScores extends React.Component {
+
+
+  render() {
+    console.log(`🍊`);
+    return (
+      <>
+        <div>hi scores</div>
+      </>
+    );
+  }
 }
 
 export default HiScores;

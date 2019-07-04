@@ -1,21 +1,16 @@
 $gameWidth: 719px;
-
-* {
-  // outline: 1px solid red;
-}
-
+$accentColor: navy;
 /* ~~~~~~~~~~~~~~~~ */
 /* Timer */
 /* ~~~~~~~~~~~~~~~~ */
-
 .timerBar {
   display: block;
   background-image: linear-gradient(rgb(37, 207, 37), rgb(18, 105, 18));
   height: 18px;
-  box-shadow: 2px 2px navy;
+  box-shadow: 2px 2px $accentColor;
   margin: 20px auto;
   margin-top: 0px;
-  border: 1px solid navy;
+  border: 1px solid $accentColor;
 }
 
 .timerBarContainer {
@@ -24,10 +19,9 @@ $gameWidth: 719px;
   width: $gameWidth;
 }
 
-/* ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~ */
 /* Interactive Fields */
-/* ~~~~~~~~~~~~~~~~ */
-
+/* ~~~~~~~~~~~~~~~~~~ */
 .canvas-container {
   display: flex;
   position: relative;
@@ -45,10 +39,8 @@ $gameWidth: 719px;
 }
 
 .gameOver {
-  border: 3px solid navy;
+  border: 3px solid $accentColor;
 }
-
-
 
 .score {
   position: absolute;
@@ -59,28 +51,28 @@ $gameWidth: 719px;
   font-family: 'Slackey', cursive;
   font-size: 20px;
   text-align: right;
-  color: navy;
+  color: $accentColor;
   align-self: flex-start;
   justify-self: flex-end;
 }
 
 #end-game-alert {
-  color: navy;
+  color: $accentColor;
   margin: 20px 0px 0px 100px;
   width: 200px;
 }
 
 #endGameP {
-  color: navy;
+  color: $accentColor;
   width: 520px;
   margin-top: 50px;
   margin-bottom: 10px;
   display: inline-block;
 }
 
-/* ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~ */
 /* main game interactivity */
-/* ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .input-and-buttons-row {
   width: 100%;
@@ -103,8 +95,8 @@ $gameWidth: 719px;
       text-align: center;
     }
     .gameButton:hover {
-      color: navy;
-      border: 3px solid navy;
+      color: $accentColor;
+      border: 3px solid $accentColor;
       transition: .5s;
     }
   }
@@ -128,8 +120,8 @@ $gameWidth: 719px;
     }
 
     .startButton:hover {
-      color: navy;
-      border: 3px solid navy;
+      color: $accentColor;
+      border: 3px solid $accentColor;
       transition: .5s;
     }
   }
@@ -141,7 +133,7 @@ $gameWidth: 719px;
     font-family: 'Overpass Mono', monospace;
     text-align: center;
     background: rgb(225, 246, 255);
-    color: navy;
+    color: $accentColor;
     border-radius: 5px;
     margin-right: 2px;
   }
@@ -152,8 +144,8 @@ $gameWidth: 719px;
 }
 
 a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
-  color: navy;
-  border: 3px solid navy;
+  color: $accentColor;
+  border: 3px solid $accentColor;
   transition: .5s;
 }
 
@@ -171,7 +163,7 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
   color: rgb(225, 246, 255);
   font-size: 1.1em;
   font-weight: bolder;
-  text-shadow: 1px 2px navy;
+  text-shadow: 1px 2px $accentColor;
 }
 
 
@@ -196,7 +188,7 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
     width: 100%;
     padding-left: 100px;
     padding-right: 100px;
-    color: navy;
+    color: $accentColor;
     // width: 520px;
     // margin-top: 50px;
     // margin-bottom: 10px;
@@ -211,7 +203,7 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
     font-family: 'Overpass Mono', monospace;
     text-align: center;
     background: rgb(225, 246, 255);
-    color: navy;
+    color: $accentColor;
     display: inline-block;
     border-radius: 5px;
   }
@@ -230,11 +222,8 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
   }
 
   button:hover {
-    color: navy;
-    border: 3px solid navy;
+    color: $accentColor;
+    border: 3px solid $accentColor;
     transition: .5s;
   }
-
-
-
 }
