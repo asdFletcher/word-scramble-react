@@ -13,7 +13,6 @@ const If = props => {
 
 
 const mapStateToProps = (state) => {
-  console.log(`game component MSTP: `, state);
   return {
     score: state.userScore,
   }

@@ -26,8 +26,8 @@ const mapStateToProps = (state) => {
     userName: state.userName,
     userIsTopTen: state.userIsTopTen,
     id: state.id,
-  }
-}
+  };
+};
 
 const ScoreReport = (props) => {
   let { userIsTopTen, userName, userScore } = props;
@@ -48,6 +48,6 @@ const ScoreReport = (props) => {
   } else {
     return null;
   }
-}
+};
 
 export default connect(mapStateToProps)(ScoreReport);

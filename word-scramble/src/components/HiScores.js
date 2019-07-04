@@ -1,10 +1,10 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table } from 'antd'
 import '../../node_modules/antd/dist/antd.css';
-import { NavLink } from "react-router-dom";
 import { connect } from 'react-redux';
 import * as actions from '../store/actions.js';
-import ScoreReport from './ScoreReport.js';
+import ScoreReport from './ScoreReport';
+import { NavLink } from 'react-router-dom';
 
 const columns = [
   {
@@ -77,7 +77,7 @@ class HiScores extends React.Component {
             columns={columns} 
             dataSource={scores}
             pagination={false}
-            rowClassName={ (record) => record.className}
+            rowClassName={(record) => record.className}
             loading={scoresLoading}
              />
         </ul>
