@@ -1,38 +1,30 @@
-$gameWidth: 719px;
-
-* {
-  // outline: 1px solid red;
-}
-
 /* ~~~~~~~~~~~~~~~~ */
 /* Timer */
 /* ~~~~~~~~~~~~~~~~ */
-
-.timerBar {
+.timer-bar {
   display: block;
   background-image: linear-gradient(rgb(37, 207, 37), rgb(18, 105, 18));
   height: 18px;
-  box-shadow: 2px 2px navy;
+  box-shadow: 2px 2px $accentColor;
   margin: 20px auto;
   margin-top: 0px;
-  border: 1px solid navy;
+  border: 1px solid $accentColor;
 }
 
-.timerBarContainer {
+.timer-bar-container {
   display: flex;
   justify-content: center;
   width: $gameWidth;
 }
 
-/* ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~ */
 /* Interactive Fields */
-/* ~~~~~~~~~~~~~~~~ */
-
+/* ~~~~~~~~~~~~~~~~~~ */
 .canvas-container {
   display: flex;
   position: relative;
   box-sizing: border-box;
-  background: rgb(225, 246, 255);
+  background: $defaultTextColor;
   width: $gameWidth;
   margin-left: 0px;
   border-radius: 5px;
@@ -41,14 +33,12 @@ $gameWidth: 719px;
 }
 
 .active {
-  border: 3px solid rgb(225, 246, 255);
+  border: 3px solid $defaultTextColor;
 }
 
 .gameOver {
-  border: 3px solid navy;
+  border: 3px solid $accentColor;
 }
-
-
 
 .score {
   position: absolute;
@@ -56,31 +46,31 @@ $gameWidth: 719px;
   right: 15px;
   width: 100%;
   height: 25px;
-  font-family: 'Slackey', cursive;
+  font-family: $defaultFontFamily;
   font-size: 20px;
   text-align: right;
-  color: navy;
+  color: $accentColor;
   align-self: flex-start;
   justify-self: flex-end;
 }
 
 #end-game-alert {
-  color: navy;
+  color: $accentColor;
   margin: 20px 0px 0px 100px;
   width: 200px;
 }
 
 #endGameP {
-  color: navy;
+  color: $accentColor;
   width: 520px;
   margin-top: 50px;
   margin-bottom: 10px;
   display: inline-block;
 }
 
-/* ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~ */
 /* main game interactivity */
-/* ~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .input-and-buttons-row {
   width: 100%;
@@ -94,17 +84,17 @@ $gameWidth: 719px;
       height: 103px;
       width: 90px;
       font-size: 16px;
-      font-family: 'Slackey', cursive;
+      font-family: $defaultFontFamily;
       background-color: rgb(21, 218, 208);
-      color: rgb(225, 246, 255);
-      border: 3px solid rgb(225, 246, 255);
+      color: $defaultTextColor;
+      border: 3px solid $defaultTextColor;
       border-radius: 5px;
       margin: 1px 3px 0px 3px;
       text-align: center;
     }
     .gameButton:hover {
-      color: navy;
-      border: 3px solid navy;
+      color: $accentColor;
+      border: 3px solid $accentColor;
       transition: .5s;
     }
   }
@@ -119,45 +109,45 @@ $gameWidth: 719px;
       height: 60px;
       display: block;
       margin: 20px auto;
-      font-family: 'Slackey', cursive;
+      font-family: $defaultFontFamily;
       font-size: 20px;
       background-color: rgb(21, 218, 208);
-      color: rgb(225, 246, 255);
-      border: 3px solid rgb(225, 246, 255);
+      color: $defaultTextColor;
+      border: 3px solid $defaultTextColor;
       border-radius: 5px;
     }
 
     .startButton:hover {
-      color: navy;
-      border: 3px solid navy;
+      color: $accentColor;
+      border: 3px solid $accentColor;
       transition: .5s;
     }
   }
 
-  .userGuess {
+  .user-guess {
     width: 430px;
     height: 100px;
     font-size: 50px;
     font-family: 'Overpass Mono', monospace;
     text-align: center;
-    background: rgb(225, 246, 255);
-    color: navy;
+    background: $defaultTextColor;
+    color: $accentColor;
     border-radius: 5px;
     margin-right: 2px;
   }
 
-  .userGuess::placeholder {
+  .user-guess::placeholder {
     font-size: 30px;
   }
 }
 
 a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
-  color: navy;
-  border: 3px solid navy;
+  color: $accentColor;
+  border: 3px solid $accentColor;
   transition: .5s;
 }
 
-.gameContainer {
+.game-container {
   margin-left: 34px;
   width: 100%;
   align-items: flex-start;
@@ -168,10 +158,10 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
   width: 680px;
   text-align: center;
   margin: 15px 15px 15px 15px;
-  color: rgb(225, 246, 255);
+  color: $defaultTextColor;
   font-size: 1.1em;
   font-weight: bolder;
-  text-shadow: 1px 2px navy;
+  text-shadow: 1px 2px $accentColor;
 }
 
 
@@ -196,7 +186,7 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
     width: 100%;
     padding-left: 100px;
     padding-right: 100px;
-    color: navy;
+    color: $accentColor;
     // width: 520px;
     // margin-top: 50px;
     // margin-bottom: 10px;
@@ -210,8 +200,8 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
     font-size: 20px;
     font-family: 'Overpass Mono', monospace;
     text-align: center;
-    background: rgb(225, 246, 255);
-    color: navy;
+    background: $defaultTextColor;
+    color: $accentColor;
     display: inline-block;
     border-radius: 5px;
   }
@@ -219,22 +209,19 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
   button {
     width: 200px;
     height: 36px;
-    font-family: 'Slackey', cursive;
+    font-family: $defaultFontFamily;
     font-size: 20px;
     background-color: rgb(21, 218, 208);
-    color: rgb(225, 246, 255);
-    border: 3px solid rgb(225, 246, 255);
+    color: $defaultTextColor;
+    border: 3px solid $defaultTextColor;
     border-radius: 5px;
     margin-left: 15px;
     border-radius: 5px;
   }
 
   button:hover {
-    color: navy;
-    border: 3px solid navy;
+    color: $accentColor;
+    border: 3px solid $accentColor;
     transition: .5s;
   }
-
-
-
 }
