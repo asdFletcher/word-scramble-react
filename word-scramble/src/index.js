@@ -10,9 +10,7 @@ import HiScores from "./components/HiScores.js";
 import AboutUs from "./components/AboutUs.js";
 
 import "./styles/reset.css";
-import "./styles/base.scss";
-import "./styles/game.scss";
-
+import "./styles/styles.scss";
 
 class App extends React.Component {
   render() {

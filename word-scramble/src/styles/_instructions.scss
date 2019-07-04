@@ -27,7 +27,7 @@
   h2 {
     font-size: 25px;
     margin: 8px 8px 25px 8px;
-    font-family: 'Slackey', cursive;
+    font-family: $defaultFontFamily;
   }
     
   button {
@@ -37,22 +37,22 @@
     font-size: 25px;
     display: block;
   
-    font-family: 'Slackey', cursive;
+    font-family: $defaultFontFamily;
     font-size: 20px;
     background-color: rgb(21, 218, 208);
-    color: rgb(225, 246, 255);
-    border: 3px solid rgb(225, 246, 255);
+    color: $defaultTextColor;
+    border: 3px solid $defaultTextColor;
     border-radius: 5px;
   }
   
   a {
     text-decoration: none;
-    color: rgb(225, 246, 255);
+    color: $defaultTextColor;
   }
   
   a:hover li:hover, button:hover{
-    color: navy;
-    border: 3px solid navy;
+    color: $accentColor;
+    border: 3px solid $accentColor;
     transition: .5s;
   }
   

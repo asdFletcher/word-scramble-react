@@ -1,7 +1,5 @@
 import React from 'react';
 
-import '../styles/instructions.scss';
-
 const HowToPlay = () => {
   return (
     <div className="how-to-play-container">

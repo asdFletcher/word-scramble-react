@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/about.scss';
 import { shuffle } from '../util/util.js';
 
 let bios = [];

@@ -12,8 +12,12 @@ header {
   margin-bottom: 40px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: $defaultTextColor;
+}
+
 h1 {
-  font-family: 'Slackey', cursive;
+  font-family: $defaultFontFamily;
   font-size: 60px;
   text-align: center;
   text-shadow: 4px 4px rgb(21, 218, 208);
@@ -29,7 +33,7 @@ h2 {
 /* ~~~~~~~~~~~~~~~~ */
 body {
   background-color: rgb(51, 134, 167);
-  color: rgb(225, 246, 255);
+  color: $defaultTextColor;
   font-family: 'Hind Siliguri', sans-serif;
   margin: 0 auto;
 }
@@ -54,27 +58,28 @@ nav {
 }
 
 nav li {
-  width: 100px;
+  display: flex;
+  align-items: center;
+  // box-sizing: content-box;
+  width: 106px;
+  height: 80px;
   margin: 10px;
-  font-family: 'Slackey', cursive;
-  font-size: 20px;
-  background-color: rgb(21, 218, 208);
-  color: rgb(225, 246, 255);
   border: 3px solid rgb(255, 246, 255);
   border-radius: 5px;
-  height: 40px;
+
+  font-family: $defaultFontFamily;
+  font-size: 20px;
+  background-color: rgb(21, 218, 208);
+  color: $defaultTextColor;
   text-align: center;
-  padding: 20px 0px;
 }
 
 nav a {
   text-decoration: none;
-  background: purple;
 }
 
-
 nav .selected li {
-    border-color: navy;
-  color: navy;
+  border-color: $accentColor;
+  color: $accentColor;
   background-color: lightblue;
 }
