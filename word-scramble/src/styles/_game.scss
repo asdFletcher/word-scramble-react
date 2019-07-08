@@ -1,3 +1,10 @@
+.game-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 /* ~~~~~~~~~~~~~~~~ */
 /* Timer */
 /* ~~~~~~~~~~~~~~~~ */
@@ -17,9 +24,9 @@
   width: $gameWidth;
 }
 
-/* ~~~~~~~~~~~~~~~~~~ */
-/* Interactive Fields */
-/* ~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~ */
+/* Canvas area */
+/* ~~~~~~~~~~~~~~~~ */
 .canvas-container {
   display: flex;
   position: relative;
@@ -32,140 +39,11 @@
   align-items: center;
 }
 
-.active {
-  border: 3px solid $defaultTextColor;
-}
-
-.gameOver {
+.game-over-container {
   border: 3px solid $accentColor;
 }
 
-.score {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  width: 100%;
-  height: 25px;
-  font-family: $defaultFontFamily;
-  font-size: 20px;
-  text-align: right;
-  color: $accentColor;
-  align-self: flex-start;
-  justify-self: flex-end;
-}
-
-#end-game-alert {
-  color: $accentColor;
-  margin: 20px 0px 0px 100px;
-  width: 200px;
-}
-
-#endGameP {
-  color: $accentColor;
-  width: 520px;
-  margin-top: 50px;
-  margin-bottom: 10px;
-  display: inline-block;
-}
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~ */
-/* main game interactivity */
-/* ~~~~~~~~~~~~~~~~~~~~~~~ */
-
-.input-and-buttons-row {
-  width: 100%;
-
-  .row1 {
-    display: flex;
-    flex-wrap: none;
-
-    // skip, shuffle, submit
-    .gameButton {
-      height: 103px;
-      width: 90px;
-      font-size: 16px;
-      font-family: $defaultFontFamily;
-      background-color: rgb(21, 218, 208);
-      color: $defaultTextColor;
-      border: 3px solid $defaultTextColor;
-      border-radius: 5px;
-      margin: 1px 3px 0px 3px;
-      text-align: center;
-    }
-    .gameButton:hover {
-      color: $accentColor;
-      border: 3px solid $accentColor;
-      transition: .5s;
-    }
-  }
-
-  .row2{
-    display: flex;
-    flex-wrap: none;
-
-    // start, reset
-    .startButton {
-      width: 200px;
-      height: 60px;
-      display: block;
-      margin: 20px auto;
-      font-family: $defaultFontFamily;
-      font-size: 20px;
-      background-color: rgb(21, 218, 208);
-      color: $defaultTextColor;
-      border: 3px solid $defaultTextColor;
-      border-radius: 5px;
-    }
-
-    .startButton:hover {
-      color: $accentColor;
-      border: 3px solid $accentColor;
-      transition: .5s;
-    }
-  }
-
-  .user-guess {
-    width: 430px;
-    height: 100px;
-    font-size: 50px;
-    font-family: 'Overpass Mono', monospace;
-    text-align: center;
-    background: $defaultTextColor;
-    color: $accentColor;
-    border-radius: 5px;
-    margin-right: 2px;
-  }
-
-  .user-guess::placeholder {
-    font-size: 30px;
-  }
-}
-
-a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
-  color: $accentColor;
-  border: 3px solid $accentColor;
-  transition: .5s;
-}
-
-.game-container {
-  margin-left: 34px;
-  width: 100%;
-  align-items: flex-start;
-}
-
-.game-message {
-  height: 20px;
-  width: 680px;
-  text-align: center;
-  margin: 15px 15px 15px 15px;
-  color: $defaultTextColor;
-  font-size: 1.1em;
-  font-weight: bolder;
-  text-shadow: 1px 2px $accentColor;
-}
-
-
-.submitScore {
+.submit-score {
   width: $gameWidth;
   display: flex;
   flex-wrap: wrap;  
@@ -176,7 +54,6 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
   background: lightblue;
 
   div {
-    // background: red;
     display: flex;
     align-items: center;
   }
@@ -187,9 +64,6 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
     padding-left: 100px;
     padding-right: 100px;
     color: $accentColor;
-    // width: 520px;
-    // margin-top: 50px;
-    // margin-bottom: 10px;
     display: inline-block;
   }
 
@@ -207,21 +81,81 @@ a:hover li:hover, .startButton:hover, .gameButton:hover, button:hover {
   }
 
   button {
-    width: 200px;
-    height: 36px;
-    font-family: $defaultFontFamily;
-    font-size: 20px;
-    background-color: rgb(21, 218, 208);
-    color: $defaultTextColor;
-    border: 3px solid $defaultTextColor;
-    border-radius: 5px;
     margin-left: 15px;
-    border-radius: 5px;
   }
+}
 
-  button:hover {
-    color: $accentColor;
-    border: 3px solid $accentColor;
-    transition: .5s;
+.game-message {
+  height: 20px;
+  width: 680px;
+  text-align: center;
+  margin: 15px 15px 15px 15px;
+  color: $defaultTextColor;
+  font-size: 1.1em;
+  font-weight: bolder;
+  text-shadow: 1px 2px $accentColor;
+}
+
+/* ~~~~~~~~~~~~~~~~~~ */
+/* Buttons and input */
+/* ~~~~~~~~~~~~~~~~~~ */
+.score {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  width: 100%;
+  height: 25px;
+  font-family: $defaultFontFamily;
+  font-size: 20px;
+  text-align: right;
+  color: $accentColor;
+  align-self: flex-start;
+  justify-self: flex-end;
+}
+
+.input-and-buttons-row {
+  .row1 {
+    width: 100%;
+    display: flex;
+    flex-wrap: none;
+    align-items: center;
   }
+  
+  .row2{
+    display: flex;
+    flex-wrap: none;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+}
+
+.user-guess {
+  width: 430px;
+  height: 100px;
+  font-size: 50px;
+  font-family: 'Overpass Mono', monospace;
+  text-align: center;
+  background: $defaultTextColor;
+  color: $accentColor;
+  border-radius: 5px;
+  margin-right: 2px;
+}
+
+.user-guess::placeholder {
+  font-size: 30px;
+}
+
+// skip, shuffle, submit
+.game-button {
+  height: 103px;
+  width: 90px;
+  font-size: 16px;
+  margin: 1px 3px 0px 3px;
+}
+
+// start, reset
+.start-button {
+  width: 200px;
+  height: 60px;
 }

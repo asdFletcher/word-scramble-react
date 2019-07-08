@@ -1,3 +1,25 @@
+* {
+  outline: 1px solid red !important;
+}
+
+/* ~~~~~~~~~~~~~~~~ */
+/* body */
+/* ~~~~~~~~~~~~~~~~ */
+body {
+  background-color: rgb(51, 134, 167);
+  color: $defaultTextColor;
+  font-family: 'Hind Siliguri', sans-serif;
+  margin: 0 auto;
+  width: 80%;
+  min-width: 500px;
+  max-width: 960px;
+}
+
+html, body {
+  height: auto;
+}
+
+// remove the affect of the vertical scroll bar in width calculations
 // apparently overlay is deprecated
 html {
   overflow-y: overlay;
@@ -20,69 +42,40 @@ h1 {
   font-family: $defaultFontFamily;
   font-size: 60px;
   text-align: center;
-  text-shadow: 4px 4px rgb(21, 218, 208);
+  text-shadow: 4px 4px $highlightColor;
   margin-bottom: 0px;
 }
 
 h2 {
+  font-size: 25px;
+  font-family: $defaultFontFamily;
+  margin-bottom: 10px;
+}
+
+h3 {
   font-size: 20px;
 }
 
-/* ~~~~~~~~~~~~~~~~ */
-/* body */
-/* ~~~~~~~~~~~~~~~~ */
-body {
-  background-color: rgb(51, 134, 167);
-  color: $defaultTextColor;
-  font-family: 'Hind Siliguri', sans-serif;
-  margin: 0 auto;
-}
-
-/* ~~~~~~~~~~~~~~~~ */
-/* body */
-/* ~~~~~~~~~~~~~~~~ */
-
-body {
-  width: 80%;
-  min-width: 500px;
-  max-width: 960px;
-}
-
-.nav-and-game-container {
+.nav-and-content-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 100px;
 }
 
-nav {
-  height: 100%;
-  background-color: rgb(52, 136, 136); 
-  border: 3px solid rgb(255, 246, 255);
-  border-radius: 10px;
+button {
+  color: red;
+    font-family: $defaultFontFamily;
+    font-size: 20px;
+    background-color: $highlightColor;
+    color: $defaultTextColor;
+    border: 3px solid $defaultTextColor;
+    border-radius: 5px;
+    border-radius: 5px;
 }
 
-nav li {
-  display: flex;
-  align-items: center;
-  width: 106px;
-  height: 86px;
-  margin: 10px;
-  border: 3px solid rgb(255, 246, 255);
-  border-radius: 5px;
-
-  font-family: $defaultFontFamily;
-  font-size: 20px;
-  background-color: rgb(21, 218, 208);
-  color: $defaultTextColor;
-  text-align: center;
-}
-
-nav a {
-  text-decoration: none;
-}
-
-nav .selected li {
-  border-color: $accentColor;
+a li:hover, button:hover {
   color: $accentColor;
-  background-color: lightblue;
+  border: 3px solid $accentColor;
+  transition: .5s;
 }

@@ -5,8 +5,6 @@ import SubmitScore from './SubmitScore.js';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions.js';
 
-import { Redirect } from 'react-router-dom'
-
 const If = props => {
   return !!props.condition ? props.children : null;
 };
@@ -123,7 +121,7 @@ class GameComponent extends React.Component {
       var placeholderText = game.started? "" : "enter solution here";
       var disableInput = !game.started || game.isOver ? "disabled" : "";
       var canvasDisplay = game.isOver? "none" : "";
-      var canvasContainerClasses = game.isOver? "canvas-container gameOver" : "canvas-container active";
+      var canvasContainerClasses = game.isOver? "canvas-container game-over-container" : "canvas-container active";
     }
 
     let canvasWidth = 705;
@@ -155,19 +153,19 @@ class GameComponent extends React.Component {
               onChange={this.handleInput}
               disabled={disableInput}/>
             <button 
-              className="gameButton" 
+              className="game-button" 
               name="submitGuess" 
               onClick={this.handleClick}>
               Submit
             </button>
             <button 
-              className="gameButton" 
+              className="game-button" 
               name="shuffleLetters" 
               onClick={this.handleClick}>
               Shuffle
             </button>
             <button 
-              className="gameButton" 
+              className="game-button" 
               name="skipWord" 
               onClick={this.handleClick}>
               Skip
@@ -175,7 +173,7 @@ class GameComponent extends React.Component {
 
           </div>
           <div className="row2">
-            <button className="startButton" name="startGame" onClick={this.handleClick}>
+            <button className="start-button" name="startGame" onClick={this.handleClick}>
               {startButtonText}
             </button>
           </div>

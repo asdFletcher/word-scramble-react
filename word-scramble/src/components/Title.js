@@ -4,7 +4,7 @@ const Title = props => {
   return (
     <header>
       <h1>Ocean Commotion</h1>
-      <h2>A Word Scramble Game with an Oceanic Theme</h2>
+      <h3>A Word Scramble Game with an Oceanic Theme</h3>
     </header>
   );
 };

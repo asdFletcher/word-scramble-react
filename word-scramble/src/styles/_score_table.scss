@@ -1,0 +1,64 @@
+/* ~~~~~~~~~~~~~~~~ */
+/* Table */
+/* ~~~~~~~~~~~~~~~~ */
+// both score tables
+.ant-table-wrapper {
+  padding: 10px;
+  display: inline-block;
+  overflow: auto;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  background-color: $defaultTextColor;
+  box-shadow: 5px 5px $highlightColor;
+  width: 620px;
+}
+
+td, tr, th {
+  color: rgb(46, 46, 46);
+}
+
+th {
+  background-color: inherit !important;
+  font-size: 35px !important;
+  padding: 10px !important;
+  border-bottom: 2px solid rgb(46, 46, 46) !important;
+}
+
+/* Row Color */
+tr:nth-child(even) {
+  background-color: lightblue;
+}
+
+th:nth-child(2) {
+  text-align: left;
+}
+
+// remove hover effect from antd rows
+.no-hover:hover > td {
+  background: initial !important;
+}
+
+td {
+  padding: 2px !important;
+  padding-left: 15px !important;
+  line-height: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  border-bottom: none !important;
+}
+
+td:nth-child(2){
+  padding-left: 15px;
+  width: 150px;
+}
+
+td:first-child {
+  border-right: 2px solid rgb(46, 46, 46);
+  text-align: center;
+  width: 50px;
+}
+
+td:last-child{
+  text-align: center;
+  width: 75px;
+}

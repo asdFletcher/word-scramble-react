@@ -1,7 +1,4 @@
 .how-to-play-container {
-  margin-bottom: 100px;
-  margin-left: 40px;
-
   p, li {
     font-size: 16px;
     line-height: 24px;
@@ -23,38 +20,6 @@
     font-size: 1.2em;
   }
     
-  h2 {
-    font-size: 25px;
-    margin: 8px 8px 25px 8px;
-    font-family: $defaultFontFamily;
-  }
-    
-  button {
-    margin: 32px auto 0px auto;
-    width: 200px;
-    height: 75px;
-    font-size: 25px;
-    display: block;
-  
-    font-family: $defaultFontFamily;
-    font-size: 20px;
-    background-color: rgb(21, 218, 208);
-    color: $defaultTextColor;
-    border: 3px solid $defaultTextColor;
-    border-radius: 5px;
-  }
-  
-  a {
-    text-decoration: none;
-    color: $defaultTextColor;
-  }
-  
-  a:hover li:hover, button:hover{
-    color: $accentColor;
-    border: 3px solid $accentColor;
-    transition: .5s;
-  }
-  
   ul {
     margin-bottom: 24px;
     width: 90%;
@@ -64,4 +29,3 @@
     height: 100px;
   }
 }
-

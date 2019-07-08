@@ -71,12 +71,12 @@ const AboutUs = () => {
           <div className="bio-contianer" key={index}>
             <h2>{person.name}</h2>
             <div className="profile-pic-container">
-              <img src={person.profilePic} alt="a" title ="a"></img>
+              <img src={person.profilePic} alt={person.name} title ={person.name}></img>
             </div>
             <div className="social-icons">
-              <Twitter person={person} />
               <Linkedin person={person} />
               <Github person={person} />
+              <Twitter person={person} />
             </div>
           </div>
         )
