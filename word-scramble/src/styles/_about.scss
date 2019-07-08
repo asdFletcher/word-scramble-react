@@ -5,19 +5,11 @@
   padding-left: 46px;
 
   .bio-contianer{
-    box-sizing: border-box;
     padding: 10px;
     padding-bottom: 25px;
     display: flex;
     flex-wrap: wrap;
     width: 50%;
-  }
-
-  h2 {
-    font-family: $defaultFontFamily;
-    width: 100%;
-    margin-bottom: 10px;
-    
   }
 
   img {
@@ -26,23 +18,29 @@
   }
 
   .profile-pic-container {
-    box-sizing: border-box;
     width: 100%;
     padding-left: 25px;
     padding-right: 25px;
   }
   .social-icons {
+    display: flex;
+    justify-content: flex-start;
     width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 25px;
 
     i {
-      font-size: 25px;
-      margin-left: 15px;
+      font-size: $socialIconSize;
       color: #ffffff;
     }
   }
 
   a {
+    margin-left: 15px;
+    margin: 0px 8px 0px 8px;
     text-decoration: none;
+    width: $socialIconSize * 0.9;
+    height: $socialIconSize;
   }
 }
-

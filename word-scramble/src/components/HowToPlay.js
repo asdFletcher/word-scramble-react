@@ -21,7 +21,7 @@ const HowToPlay = () => {
 
       <p id="last-p">When you're ready to play, click the button below to go to the game page.</p>
 
-      <button className="test"><NavLink to="/play-game">Play Game</NavLink></button>
+      <NavLink to="/play-game"><button className="start-button">Play Game</button></NavLink>
     </div>
   );
 }

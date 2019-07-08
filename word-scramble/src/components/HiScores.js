@@ -52,8 +52,9 @@ class HiScores extends React.Component {
       // assign rank and detect if current user is in top 10
       await data.forEach(async (score, index) => {
         score.rank = index + 1;
+        score.className =  'no-hover';
         if (this.props.id && this.props.id === score.id) {
-          score.className = 'belongsToCurrentUser';
+          score.className += ' belongsToCurrentUser';
           this.props.updateIsTopTen(true);
         }
       });
@@ -70,7 +71,7 @@ class HiScores extends React.Component {
 
     return (
       <div className="score-page-container">
-        <h3>Hi Scores</h3>
+        <h2>Hi Scores</h2>
         <ul>
           <Table
             className={'top-ten-score-table'}
@@ -82,7 +83,7 @@ class HiScores extends React.Component {
              />
         </ul>
         <ScoreReport />
-        <button className="startButton"><NavLink to="/play-game">Play Game</NavLink></button>
+        <NavLink to="/play-game"><button className="start-button">Play Game</button></NavLink>
       </div>
     );
   }

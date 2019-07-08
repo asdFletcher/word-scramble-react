@@ -21,7 +21,7 @@ class App extends React.Component {
         <BrowserRouter>
           <div className="App">
             <Title />
-            <div className="nav-and-game-container">
+            <div className="nav-and-content-container">
               <Nav />
               <Route exact path="/how-to-play" component={HowToPlay} />
               <Route exact path="/play-game" component={GameComponent} />
