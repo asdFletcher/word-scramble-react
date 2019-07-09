@@ -40,7 +40,7 @@ class SubmitScore extends React.Component {
     this.props.updateUserName(scoreData.name);
     this.props.updateIsTopTen(false);
 
-    await fetchPost('http://localhost:3001/save-score', scoreData);
+    await fetchPost(`${process.env.REACT_APP_BACKEND_BASE_URL}/save-score`, scoreData);
     this.setState({redirect: true});
   }
 
