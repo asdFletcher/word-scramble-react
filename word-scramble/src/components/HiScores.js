@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch) => {
 class HiScores extends React.Component {
   async componentDidMount() {
     try {
-      let url = `http://localhost:3001/get-scores`;
+      let url = `${process.env.REACT_APP_BACKEND_BASE_URL}/get-scores`;
       this.props.updateScoresLoading(true);
       let res = await fetch(url)
       this.props.updateScoresLoading(false);
