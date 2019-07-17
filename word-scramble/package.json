@@ -1,27 +1,27 @@
 {
-  "name": "my-app",
+  "name": "word-scramble-react",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "antd": "^3.20.0",
-    "node-sass": "^4.12.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-redux": "^7.1.0",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
-    "redux": "^4.0.1",
-    "uuid": "^3.3.2"
-  },
+  "description": "a front end for the Ocean Commotion word game",
+  "private": false,
+  "main": "build/index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "webpack --watch",
+    "build": "webpack --config webpack.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
+  "author": {
+    "name": "Fletcher LaRue",
+    "email": "laruefletcher@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asdFletcher/word-scramble-react"
+  },
+  "license": "MIT",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -33,5 +33,25 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "antd": "^3.20.0",
+    "node-sass": "^4.12.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "redux": "^4.0.2",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/loader": "^8.0.6",
+    "@babel/plugin-transform-object-rest-spread": "^6.23.0",
+    "@babel/plugin-transform-react-jsx": "^6.24.1",
+    "@babel/preset-env": "^1.5.1",
+    "webpack-cli": "^3.3.5"
   }
 }
